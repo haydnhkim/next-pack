@@ -1,0 +1,24 @@
+{
+  "name": "next-app",
+  "version": "1.0.0",
+  "main": "src/server/index.js",
+  "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "next": "*",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "scripts": {
+    "start": "next-pack start",
+    "dev": "next-pack",
+    "build": "next-pack build",
+    "server": "node -r esm src/server/index.js"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.0"
+  }
+}

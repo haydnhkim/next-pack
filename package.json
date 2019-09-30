@@ -1,0 +1,95 @@
+{
+  "name": "@repacks/next-pack",
+  "version": "9.0.0-1",
+  "keywords": [
+    "react",
+    "next.js",
+    "managed-configration"
+  ],
+  "repository": "git@github.com:haydnhkim/next-pack.git",
+  "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "next-pack": "./bin/index.js"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-eslint": "10.x",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "chokidar": "^3.1.1",
+    "classlist-polyfill": "^1.2.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "cross-spawn": "^7.0.0",
+    "eslint": "^6.4.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^4.3.0",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.x",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.6.0",
+    "husky": "^3.0.5",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-style-module": "^6.0.0",
+    "intersection-observer": "^0.7.0",
+    "lint-staged": "^9.3.0",
+    "prettier": "^1.18.2",
+    "react-app-polyfill": "^1.0.3",
+    "shelljs": "^0.8.3",
+    "string-replace-loader": "^2.2.0"
+  },
+  "devDependencies": {
+    "axios": "^0.19.0",
+    "cross-env": "^6.0.0",
+    "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
+    "release-it": "^12.4.1"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "dev": "yarn setup:link && yarn --cwd dev/next-app dev",
+    "dev-server": "yarn setup:link && yarn --cwd dev/next-app server",
+    "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles",
+    "setup": "yarn && npm-run-all --sequential setup:*",
+    "setup:install": "npm-run-all --parallel setup-install:*",
+    "setup-install:package": "yarn add next@9.x react react-dom",
+    "setup-install:dev": "yarn --cwd dev/next-app install",
+    "setup:link": "yarn link && yarn link @repacks/next-pack && yarn --cwd dev/next-app link @repacks/next-pack",
+    "teardown": "node scripts/utils/teardown.js",
+    "release": "release-it"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn setup:link && yarn teardown && git add package.json yarn.lock && lint-staged",
+      "post-commit": "yarn unlink @repacks/next-pack && yarn --cwd dev/next-app unlink @repacks/next-pack && yarn unlink"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "import-sort --write",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,css,html}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "git": {
+      "commitArgs": "--no-verify",
+      "pushArgs": "--no-verify"
+    }
+  }
+}
