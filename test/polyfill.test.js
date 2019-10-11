@@ -1,25 +1,27 @@
-const shell = require('shelljs');
+/**
+ * @jest-environment node
+ */
+const execa = require('execa');
 const axios = require('axios');
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 test(
   'should be inserted a polyfill',
   done => {
-    const child = shell.exec('yarn dev-server', function(code, stdout, stderr) {
-      console.log('Exit code:', code);
-      console.log('Program output:', stdout);
-      console.log('Program stderr:', stderr);
-    });
-    child.stdout.on('data', data => {
+    const child = execa('yarn', ['dev-server']);
+
+    child.stdout.setEncoding('utf-8');
+    child.stdout.on('data', async data => {
       if (!data.includes('Ready on http')) return;
 
-      setTimeout(async () => {
-        const res = await axios.get('http://localhost:3000');
+      await wait(1000);
+      const res = await axios.get('http://localhost:3000');
 
-        expect(res.data).toMatch(/__NEXT_POLYFILL__/);
+      expect(res.data).toMatch(/__NEXT_POLYFILL__/);
 
-        child.kill();
-        done();
-      }, 1000);
+      child.kill();
+      done();
     });
   },
   30 * 1000

@@ -19,6 +19,7 @@
     "server": "node -r esm src/server/index.js"
   },
   "devDependencies": {
+    "@types/react": "^16.9.5",
     "rimraf": "^3.0.0"
   }
 }

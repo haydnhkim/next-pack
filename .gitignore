@@ -274,3 +274,5 @@ initialized
 dev/next-app/.*
 dev/next-app/*.js
 dev/next-app/yarn.lock
+dev/next-app/next-env.d.ts
+dev/next-app/tsconfig.json

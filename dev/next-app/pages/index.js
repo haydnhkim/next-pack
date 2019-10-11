@@ -9,7 +9,7 @@ const Page = () => {
         <title>Main!</title>
       </Head>
 
-      <div>Hello, world! by yarn.</div>
+      <div>Hello, Next Pack!</div>
 
       <div>
         <Link href="/hello?test=1">

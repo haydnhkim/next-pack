@@ -15,11 +15,12 @@ const bootstrap = () => {
 };
 
 (() => {
-  try {
-    bootstrap();
-  } catch (err) {
-    throw err;
-  }
+  const fs = require('fs');
+  const shell = require('shelljs');
+
+  if (!fs.existsSync(userNextConfigPath)) shell.rm('-f', initializedPath);
+
+  bootstrap();
 
   try {
     // override next.config in memory
@@ -27,10 +28,11 @@ const bootstrap = () => {
   } catch (err) {
     console.info(`[\x1b[34m info \x1b[0m] created a \x1b[36mnext.config.js\x1b[0m and default configuration files for you.
 Please \x1b[35mrun it again\x1b[0m.`);
+    shell.rm('-f', initializedPath);
     process.exit();
     return;
   }
 
-  const shell = require('shelljs');
+  if (!dev) return;
   shell.touch(initializedPath);
 })();
