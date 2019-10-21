@@ -22,13 +22,10 @@ const sharedGitIgnoreRegExp = /# Created by https:\/\/www.gitignore.io.+[^]+# En
 
   // Create .gitignore in project root
   // Update text between # Created by ~ # End of next-pack
-  fs.writeFile(
+  fs.writeFileSync(
     userGitIgnorePath,
     `${sharedGitIgnore.trim()}\n\n${userGitIgnore
       .replace(userSharedGitIgnore, '')
-      .trim()}`.trim(),
-    err => {
-      if (err) throw err;
-    }
+      .trim()}`.trim()
   );
 })();
