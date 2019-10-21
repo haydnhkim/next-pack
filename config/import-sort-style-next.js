@@ -1,6 +1,14 @@
 const { readdirSync } = require('fs');
 
-const fixedOrder = ['react', 'prop-types', 'next', 'graphql', 'apollo'];
+const fixedOrder = [
+  'react',
+  'prop-types',
+  'next',
+  'redux',
+  'mobx',
+  'graphql',
+  'apollo',
+];
 
 module.exports = styleApi => {
   const {
@@ -23,7 +31,9 @@ module.exports = styleApi => {
     modules.indexOf(imported.moduleName.split('/')[0]) !== -1;
   const isReactModule = imported =>
     Boolean(
-      imported.moduleName.match(/^(react|prop-types|redux|next|graphql|apollo)/)
+      imported.moduleName.match(
+        /^(react|prop-types|next|redux|mobx|graphql|apollo)/
+      )
     );
   const isStylesModule = imported =>
     Boolean(imported.moduleName.match(/\.(s?css|less)$/));

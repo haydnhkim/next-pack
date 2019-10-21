@@ -17,7 +17,7 @@ You must specify the version for your Next.js version.
 First install Next.js and React package. see [Manual Setup for Next.js](https://github.com/zeit/next.js#manual-setup)
 
 ```sh
-npm install --save next react react-dom
+npm install next react react-dom
 ```
 
 or
@@ -29,18 +29,18 @@ yarn add next react react-dom
 `⚠️ caution`: For new projects, run `git init` first.  
 Since we use git hooks, the `.git` folder must exist.
 
-#### Next pack Setup
+#### Next Pack Setup
 
 Install next-pack of the same major version as Next.js.
 
 ```sh
-npm install @repacks/next-pack@^9.0.0
+npm install @repacks/next-pack
 ```
 
 or
 
 ```sh
-yarn add @repacks/next-pack@^9.0.0
+yarn add @repacks/next-pack
 ```
 
 ### How to use

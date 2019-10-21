@@ -13,7 +13,7 @@ const userPackageJSon = require(userPackageJSonPath);
   const hookConfig = {
     husky: {
       hooks: {
-        'pre-commit': 'lint-staged',
+        'pre-commit': 'npx lint-staged',
       },
     },
     'lint-staged': {

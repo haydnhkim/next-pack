@@ -54,7 +54,10 @@ module.exports = {
           ...[
             {
               test: /_document\.js$/,
-              loader: 'string-replace-loader',
+              loader: path.resolve(
+                __dirname,
+                'node_modules/string-replace-loader'
+              ),
               options: {
                 search: replaceTargetString,
                 replace: `_react["default"].createElement("script", {

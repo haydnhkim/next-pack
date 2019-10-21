@@ -29,7 +29,7 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x",
-    "eslint-plugin-you-dont-need-lodash-underscore": "^6.7.1",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.7.2",
     "husky": "^3.0.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-module": "^6.0.0",
@@ -52,7 +52,7 @@
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 8.9.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -62,16 +62,14 @@
     "dev-server": "yarn setup:link && yarn --cwd dev/next-app server",
     "test": "cross-env NODE_ENV=test jest",
     "setup": "yarn && npm-run-all --sequential setup:*",
-    "setup:install": "npm-run-all --parallel setup-install:*",
-    "setup-install:package": "yarn add next@9.x react react-dom",
-    "setup-install:dev": "yarn --cwd dev/next-app install",
+    "setup:install": "yarn --cwd dev/next-app install",
     "setup:link": "yarn link && yarn link @repacks/next-pack && yarn --cwd dev/next-app link @repacks/next-pack",
     "teardown": "node scripts/utils/teardown.js",
     "release": "release-it"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn setup:link && yarn teardown && git add package.json yarn.lock && lint-staged",
+      "pre-commit": "yarn setup:link && yarn teardown && git add package.json yarn.lock && npx lint-staged",
       "post-commit": "yarn unlink @repacks/next-pack && yarn --cwd dev/next-app unlink @repacks/next-pack && yarn unlink"
     }
   },
