@@ -30,6 +30,7 @@
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "1.x",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.7.2",
+    "html5shiv": "^3.7.3",
     "husky": "^3.0.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-module": "^6.0.0",

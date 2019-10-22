@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
-const { userNextConfig } = require('./scripts/utils/paths');
+const { projectDir, userNextConfig } = require('./scripts/utils/paths');
 
 // Check for insert polyfill
 const replaceTargetString = `page!=='\\/_error'&&pageScript`;
@@ -27,6 +27,14 @@ Please check for new releases of next-pack or pull request to next-pack as chang
     process.exit();
   }
 })();
+
+// handle differently depending on where string-replace-loader is installed
+const strReplacerDir = 'node_modules/string-replace-loader';
+const stringReplaceLoader = fs.existsSync(
+  path.resolve(projectDir, strReplacerDir)
+)
+  ? 'string-replace-loader'
+  : path.resolve(__dirname, 'node_modules/string-replace-loader');
 
 module.exports = {
   ...userNextConfig,
@@ -54,10 +62,7 @@ module.exports = {
           ...[
             {
               test: /_document\.js$/,
-              loader: path.resolve(
-                __dirname,
-                'node_modules/string-replace-loader'
-              ),
+              loader: stringReplaceLoader,
               options: {
                 search: replaceTargetString,
                 replace: `_react["default"].createElement("script", {
