@@ -20,7 +20,6 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chokidar": "^3.1.1",
     "classlist-polyfill": "^1.2.0",
-    "copy-webpack-plugin": "^5.0.4",
     "cross-spawn": "^7.0.1",
     "eslint": "^6.4.0",
     "eslint-config-react-app": "^5.0.2",
@@ -39,20 +38,20 @@
     "prettier": "^1.18.2",
     "react-app-polyfill": "^1.0.3",
     "shelljs": "^0.8.3",
-    "string-replace-loader": "^2.2.0",
     "typescript": "3.x",
     "webpack": "4.x"
   },
   "devDependencies": {
-    "axios": "^0.19.0",
     "cross-env": "^6.0.0",
-    "execa": "^2.0.5",
+    "execa": "^3.2.0",
     "jest": "^24.9.0",
     "next": "9.x",
+    "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
     "react": "16.x",
     "react-dom": "16.x",
-    "release-it": "^12.4.1"
+    "release-it": "^12.4.1",
+    "webpack-inject-plugin": "^1.5.3"
   },
   "peerDependencies": {
     "next": "9.x"
@@ -67,6 +66,7 @@
     "dev": "yarn setup:link && yarn --cwd dev/next-app dev",
     "dev-server": "yarn setup:link && yarn --cwd dev/next-app server",
     "test": "cross-env NODE_ENV=test jest",
+    "test-setting": "yarn --cwd dev/next-app build && yarn --cwd dev/next-app server",
     "setup": "yarn && npm-run-all --sequential setup:*",
     "setup:install": "yarn --cwd dev/next-app install",
     "setup:link": "yarn link && yarn link @repacks/next-pack && yarn --cwd dev/next-app link @repacks/next-pack",
