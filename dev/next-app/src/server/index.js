@@ -3,7 +3,8 @@ import next from '@repacks/next-pack';
 import express from 'express';
 
 const PORT = process.env.PORT || 3000;
-const nextApp = next({ dev: false });
+const dev = process.env.NODE_ENV !== 'production';
+const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
 const app = express();

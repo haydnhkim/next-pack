@@ -20,6 +20,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chokidar": "^3.1.1",
     "classlist-polyfill": "^1.2.0",
+    "copy-webpack-plugin": "^5.0.4",
     "cross-spawn": "^7.0.1",
     "eslint": "^6.4.0",
     "eslint-config-react-app": "^5.0.2",
@@ -38,9 +39,9 @@
     "prettier": "^1.18.2",
     "react-app-polyfill": "^1.0.3",
     "shelljs": "^0.8.3",
+    "string-replace-loader": "^2.2.0",
     "typescript": "3.x",
-    "webpack": "4.x",
-    "webpack-inject-plugin": "^1.5.3"
+    "webpack": "4.x"
   },
   "devDependencies": {
     "cross-env": "^6.0.0",
@@ -64,9 +65,9 @@
   },
   "scripts": {
     "dev": "yarn setup:link && yarn --cwd dev/next-app dev",
-    "dev-server": "yarn setup:link && yarn --cwd dev/next-app server",
+    "dev-server": "yarn setup:link && NODE_ENV=development yarn --cwd dev/next-app server",
     "test": "cross-env NODE_ENV=test jest",
-    "test-setting": "yarn --cwd dev/next-app build && yarn --cwd dev/next-app server",
+    "test-prod-setting": "yarn --cwd dev/next-app build && NODE_ENV=production yarn --cwd dev/next-app server",
     "setup": "yarn && npm-run-all --sequential setup:*",
     "setup:install": "yarn --cwd dev/next-app install",
     "setup:link": "yarn link && yarn link @repacks/next-pack && yarn --cwd dev/next-app link @repacks/next-pack",
