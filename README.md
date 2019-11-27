@@ -78,7 +78,7 @@ If you want to use the import statement on the server, you can find examples in 
 When running next-pack, the local development and production environment does the following:
 
 - Run eslint in watch mode on the terminal
-- extension next.config.js (Automatically add polyfills for IE9~11 and Android 4)
+- extension next.config.js (Automatically add polyfills)
 - Manage settings by copying configuration files from next-pack, next-pack/root folder to project folder
   - .editorconfig
   - .eslintrc.js

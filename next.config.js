@@ -39,7 +39,7 @@ const stringReplaceLoader = fs.existsSync(
 module.exports = {
   ...userNextConfig,
   webpack(config, args) {
-    const { isServer } = args;
+    const { buildId, isServer } = args;
 
     const newConfig = {
       ...config,
@@ -48,8 +48,8 @@ module.exports = {
         : async () => {
             const entries = await config.entry();
 
-            if (!entries['static/runtime/polyfill.js'])
-              entries['static/runtime/polyfill.js'] = [
+            if (!entries[`static/runtime/polyfill-${buildId}.js`])
+              entries[`static/runtime/polyfill-${buildId}.js`] = [
                 path.resolve(__dirname, 'client/polyfills.js'),
               ];
 
@@ -68,7 +68,7 @@ module.exports = {
                 replace: `
                   _react["default"].createElement("script", {
                     id: "__NEXT_POLYFILL__",
-                    src: assetPrefix + "/_next/static/runtime/load-polyfill.js",
+                    src: assetPrefix + "/_next/static/runtime/polyfill-${buildId}.js",
                     nonce: this.props.nonce,
                     crossOrigin: this.props.crossOrigin || ${process.crossOrigin}
                   }),
@@ -86,12 +86,6 @@ module.exports = {
       },
       plugins: [
         ...(config.plugins || []),
-        new CopyPlugin([
-          {
-            from: path.resolve(__dirname, 'client/load-polyfill.js'),
-            to: 'static/runtime/load-polyfill.js',
-          },
-        ]),
         new CopyPlugin([
           {
             from: path.resolve(__dirname, 'client/support-base-tag.js'),
