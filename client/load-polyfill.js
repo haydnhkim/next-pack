@@ -1,9 +1,9 @@
-// Detecting Internet Explorer or Android 4
+// Detecting Internet Explorer, Edge or Android 4
 (function() {
   if (typeof window === 'undefined') return;
 
   var ua = navigator.userAgent;
-  var isIE = /MSIE \d|Trident.*rv:/.test(ua);
+  var isIE = /MSIE \d|Trident.*rv:|Edge/.test(ua);
   var isAndroid = ua.indexOf('Android') > -1;
 
   if (!isIE && !isAndroid) return;
