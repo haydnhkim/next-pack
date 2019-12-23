@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 const { projectDir, userNextConfig } = require('./scripts/utils/paths');
 
 // Check for insert polyfill
@@ -34,12 +33,13 @@ const stringReplaceLoader = fs.existsSync(
   path.resolve(projectDir, strReplacerDir)
 )
   ? 'string-replace-loader'
-  : path.resolve(__dirname, 'node_modules/string-replace-loader');
+  : path.resolve(__dirname, strReplacerDir);
 
 module.exports = {
   ...userNextConfig,
   webpack(config, args) {
     const { buildId, isServer } = args;
+    const polyfillsPath = `static/runtime/polyfills-next-pack-${buildId}.js`;
 
     const newConfig = {
       ...config,
@@ -48,8 +48,8 @@ module.exports = {
         : async () => {
             const entries = await config.entry();
 
-            if (!entries[`static/runtime/polyfill-${buildId}.js`])
-              entries[`static/runtime/polyfill-${buildId}.js`] = [
+            if (!entries[polyfillsPath])
+              entries[polyfillsPath] = [
                 path.resolve(__dirname, 'client/polyfills.js'),
               ];
 
@@ -67,13 +67,7 @@ module.exports = {
                 search: replaceTargetString,
                 replace: `
                   _react["default"].createElement("script", {
-                    id: "__NEXT_POLYFILL__",
-                    src: assetPrefix + "/_next/static/runtime/polyfill-${buildId}.js",
-                    nonce: this.props.nonce,
-                    crossOrigin: this.props.crossOrigin || ${process.crossOrigin}
-                  }),
-                  _react["default"].createElement("script", {
-                    src: assetPrefix + "/_next/static/runtime/support-base-tag.js",
+                    src: assetPrefix + "/_next/${polyfillsPath}",
                     nonce: this.props.nonce,
                     crossOrigin: this.props.crossOrigin || ${process.crossOrigin}
                   }),
@@ -84,15 +78,6 @@ module.exports = {
           ],
         ],
       },
-      plugins: [
-        ...(config.plugins || []),
-        new CopyPlugin([
-          {
-            from: path.resolve(__dirname, 'client/support-base-tag.js'),
-            to: 'static/runtime/support-base-tag.js',
-          },
-        ]),
-      ],
     };
 
     return userNextConfig.webpack

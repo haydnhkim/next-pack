@@ -8,9 +8,7 @@
   "dependencies": {
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "next": "*",
-    "react": "*",
-    "react-dom": "*"
+    "isomorphic-unfetch": "^3.0.0"
   },
   "scripts": {
     "start": "next-pack start",
