@@ -8,7 +8,8 @@
   "dependencies": {
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "isomorphic-unfetch": "^3.0.0"
+    "isomorphic-unfetch": "^3.0.0",
+    "qs": "^6.9.1"
   },
   "scripts": {
     "start": "next-pack start",

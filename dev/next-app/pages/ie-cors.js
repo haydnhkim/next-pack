@@ -8,7 +8,7 @@ const Page = () => {
   const [outputText, setOutputText] = useState(readyText);
 
   const handleClick = () => {
-    const url = `https://httpbin.org/get?fetch=true&timestamp=${new Date()}`;
+    const url = `https://httpbin.org/get?fetch=true&timestamp=${new Date().toISOString()}`;
 
     setOutputText(loadingText);
     fetch(url)
