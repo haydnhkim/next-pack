@@ -13,9 +13,13 @@ const xhrProxy = async (req, res) => {
 
   const urlItem = new URL(url);
   const search = qs.parse(urlItem.search.substring(1));
+  const queryString = qs.stringify(search);
   const encodedUrl = `${urlItem.origin.replace('https:', 'http:')}${
     urlItem.pathname
-  }${qs.stringify(search)}`;
+  }${queryString ? `?${queryString}` : ''}`;
+
+  headers.origin = headers.host;
+  headers.host = urlItem.host;
 
   let result;
   try {
@@ -25,7 +29,7 @@ const xhrProxy = async (req, res) => {
       credentials: 'include',
       redirect: 'follow',
       referrer: 'no-referrer',
-      ...(body && { body }),
+      ...(body && { body: JSON.stringify(body) }),
     });
   } catch (err) {
     console.error('err', err);
