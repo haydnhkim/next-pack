@@ -32,13 +32,15 @@ const path = require('path');
   const cli = new CLIEngine({ baseConfig });
 
   // eslint execution function
-  let lintRunTime;
+  let lastLintRunTime;
+  let prevMessage;
   const lint = () => {
     // Return if rerun within 2 seconds
-    if (Date.now() < lintRunTime + 2000) return;
+    if (Date.now() < lastLintRunTime + 2000) return;
 
-    lintRunTime = Date.now();
-    let report, formatter;
+    lastLintRunTime = Date.now();
+    let report;
+    let formatter = () => {};
     try {
       report = cli.executeOnFiles(esLintUserDirs);
       formatter = cli.getFormatter();
@@ -53,7 +55,12 @@ const path = require('path');
     )
       return;
 
-    console.log(formatter(report.results));
+    const message = formatter(report.results);
+    // ignore same messages
+    if (message === prevMessage) return;
+
+    prevMessage = message;
+    console.log(message);
   };
   setTimeout(() => {
     lint();
