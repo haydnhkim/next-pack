@@ -10,7 +10,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 beforeEach(() => {
   shell.cp(
-    path.resolve(__dirname, '../root/next.config.js'),
+    path.resolve(__dirname, '../src/root/next.config.js'),
     path.resolve(__dirname, '../dev/next-app/next.config.js')
   );
 });
@@ -28,7 +28,7 @@ test(
       const res = await fetch('http://localhost:3000');
       const html = await res.text();
 
-      expect(html).toMatch(/polyfills-next-pack-development\.js/);
+      expect(html).toMatch(/polyfills-next-pack-/);
 
       child.kill();
       done();

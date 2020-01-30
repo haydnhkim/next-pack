@@ -1,7 +1,7 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const dev = process.env.NODE_ENV === 'development';
 const { userNextConfigPath, initializedPath } = require('./paths');
-const nextConfig = require('../../next.config');
+const nextConfig = require('../../../next.config');
 
 const bootstrap = () => {
   if (!dev) return;

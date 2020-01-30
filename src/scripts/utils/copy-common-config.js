@@ -23,7 +23,7 @@ const { isInitialized } = require('./state');
           fs.existsSync(path.resolve(projectDir, file))
         )
     )
-    .map(file => path.resolve(__dirname, '../../', file));
+    .map(file => path.resolve(__dirname, '../../../', file));
 
   if (targetFiles.length === 0) return;
 

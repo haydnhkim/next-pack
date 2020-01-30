@@ -1,4 +1,4 @@
-require('./scripts/utils/bootstrap');
+require('./src/scripts/utils/bootstrap');
 const next = require('next');
 
 module.exports = options => {

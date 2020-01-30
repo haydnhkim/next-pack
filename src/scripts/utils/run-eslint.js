@@ -22,7 +22,7 @@ const path = require('path');
 
   const nextEsLintConfig = require(path.resolve(
     __dirname,
-    '../../config/eslint.js'
+    '../../../config/eslint.js'
   ));
   const baseConfig = {
     ...nextEsLintConfig,

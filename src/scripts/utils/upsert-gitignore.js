@@ -5,7 +5,7 @@ const { projectDir } = require('./paths');
 const { isInitialized } = require('./state');
 
 const userGitIgnorePath = path.resolve(projectDir, '.gitignore');
-const gitIgnorePath = path.resolve(__dirname, '../../config/gitignore.txt');
+const gitIgnorePath = path.resolve(__dirname, '../../../config/gitignore.txt');
 const sharedGitIgnoreRegExp = /# Created by https:\/\/www.gitignore.io.+[^]+# End of next-pack/;
 
 (() => {

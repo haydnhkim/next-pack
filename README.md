@@ -102,7 +102,7 @@ This allows for the automatic loading of polyfills in separate projects without 
 The `next-pack/index.js` file is implemented simply by calling `next` with the addition of the parts that `next-pack` handles.
 
 ```js
-require('./scripts/utils/bootstrap'); // Invoking the function of next-pack
+require('./src/scripts/utils/bootstrap'); // Invoking the function of next-pack
 const next = require('next');
 
 module.exports = options => {

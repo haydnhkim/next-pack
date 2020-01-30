@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { projectDir, userNextConfig } = require('./scripts/utils/paths');
+const { projectDir, userNextConfig } = require('./src/scripts/utils/paths');
 
 // Check for insert polyfill
 const replaceTargetString = `page!=='\\/_error'&&pageScript`;
@@ -50,7 +50,7 @@ module.exports = {
 
             if (!entries[polyfillsPath])
               entries[polyfillsPath] = [
-                path.resolve(__dirname, 'client/polyfills.js'),
+                path.resolve(__dirname, 'src/client/polyfills.js'),
               ];
 
             return entries;
