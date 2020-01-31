@@ -66,7 +66,8 @@
     "/bin",
     "/src",
     "/config",
-    "/*.js"
+    "/*.js",
+    "/.*"
   ],
   "scripts": {
     "dev": "yarn setup:link && yarn --cwd dev/next-app dev",
