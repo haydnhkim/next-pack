@@ -20,13 +20,12 @@ const path = require('path');
     .map(file => path.resolve(projectDir, file))
     .find(file => fs.existsSync(file));
 
-  const nextEsLintConfig = require(path.resolve(
-    __dirname,
+  const nextEsLintConfig = require(
     '../../../config/eslint.js'
-  ));
+  );
   const baseConfig = {
     ...nextEsLintConfig,
-    ...(userConfigFile ? require(userConfigFile) : {}),
+    ...(userConfigFile && require(userConfigFile)),
   };
   const esLintUserDirs = userDirs.map(dir => `${path.resolve(dir, '**/*.js')}`);
   const cli = new CLIEngine({ baseConfig });

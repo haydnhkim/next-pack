@@ -1,17 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-const { projectDir, userNextConfig } = require('./src/scripts/utils/paths');
+const resolve = require('resolve');
+const { userNextConfig } = require('./src/scripts/utils/paths');
 
 // Check for insert polyfill
 const replaceTargetString = `page!=='\\/_error'&&pageScript`;
 (() => {
   if (process.env.NODE_ENV === 'production') return;
 
-  const dirname = __dirname.split('node_modules')[0];
-  const replaceTargetFile = path.resolve(
-    dirname,
-    'node_modules/next/dist/pages/_document.js'
-  );
+  const nextMainPath = resolve.sync('next');
+  const targetPackageDir = '/node_modules/next/';
+  const replaceTargetFile = `${nextMainPath.split(targetPackageDir)[0]}${targetPackageDir}dist/pages/_document.js`;
   const fileContent = fs.readFileSync(replaceTargetFile, 'utf-8');
 
   if (!new RegExp(replaceTargetString).test(fileContent)) {
@@ -26,14 +25,6 @@ Please check for new releases of next-pack or pull request to next-pack as chang
     process.exit();
   }
 })();
-
-// handle differently depending on where string-replace-loader is installed
-const strReplacerDir = 'node_modules/string-replace-loader';
-const stringReplaceLoader = fs.existsSync(
-  path.resolve(projectDir, strReplacerDir)
-)
-  ? 'string-replace-loader'
-  : path.resolve(__dirname, strReplacerDir);
 
 module.exports = {
   ...userNextConfig,
@@ -62,7 +53,7 @@ module.exports = {
           ...[
             {
               test: /_document\.js$/,
-              loader: stringReplaceLoader,
+              loader: resolve.sync('string-replace-loader'),
               options: {
                 search: replaceTargetString,
                 replace: `

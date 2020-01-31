@@ -1,14 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 const { projectDir } = require('./paths');
-const { isInitialized } = require('./state');
 const userPackageJSonPath = path.resolve(projectDir, 'package.json');
 const userPackageJSon = require(userPackageJSonPath);
 
 // Add husky, lint-staged configuration to project package.json
 (() => {
-  // Do not add if already added or for test next-app
-  if (isInitialized || userPackageJSon.name === 'next-app') return;
+  // Do not add if already added or for dev-test-next-app
+  if (
+    userPackageJSon.husky || userPackageJSon.name === 'dev-test-next-app'
+  ) return;
 
   const hookConfig = {
     husky: {

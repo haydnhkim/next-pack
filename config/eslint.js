@@ -1,10 +1,10 @@
+const resolve = require('resolve');
+
 module.exports = {
   extends: [
-    'react-app',
-    'plugin:jsx-a11y/recommended',
-    'plugin:you-dont-need-lodash-underscore/compatible',
+    resolve.sync('eslint-config-react-app'),
   ],
-  plugins: ['jsx-a11y', 'you-dont-need-lodash-underscore', 'react-hooks'],
+  plugins: ['jsx-a11y', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/anchor-is-valid': [

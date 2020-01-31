@@ -2,12 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
 const { projectDir } = require('./paths');
-const { isInitialized } = require('./state');
 
 // Copy files in root folder to project root
 (() => {
-  if (isInitialized) return;
-
   const rootDir = path.resolve(__dirname, '../../root');
 
   const rootFiles = [];

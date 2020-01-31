@@ -1,5 +1,5 @@
 {
-  "name": "next-app",
+  "name": "dev-test-next-app",
   "version": "1.0.0",
   "main": "src/server/index.js",
   "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",

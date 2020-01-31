@@ -2,12 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
 const { projectDir } = require('./paths');
-const { isInitialized } = require('./state');
 
 // Copy specific configuration files to the project root
 (() => {
-  if (isInitialized) return;
-
+  const rootDir = path.resolve(__dirname, '../../../');
   const targetFiles = [
     '.editorconfig',
     '.gitattributes',
@@ -15,15 +13,27 @@ const { isInitialized } = require('./state');
     '.importsortrc.js',
     '.prettierrc.js',
   ]
-    .filter(
-      file =>
+    .filter(file => {
+      const isJsConfigFile = ['rc.js', 'config.js']
+        .some(end => file.endsWith(end));
+      const userFilePath = path.resolve(projectDir, file);
+      const isExistsFile = fs.existsSync(userFilePath);
+      let isCopyTarget = false;
+
+      if (isJsConfigFile) {
         // *rc.js, *config.js files are not copied if they already exist
-        !(
-          ['rc.js', 'config.js'].some(end => file.endsWith(end)) &&
-          fs.existsSync(path.resolve(projectDir, file))
-        )
-    )
-    .map(file => path.resolve(__dirname, '../../../', file));
+        isCopyTarget = !isExistsFile;
+      } else if (isExistsFile) {
+        // Files with the same content data are not copy targets
+        const filePath = path.resolve(rootDir, file);
+        const fileData = fs.readFileSync(filePath, 'utf8');
+        const userFileData = fs.readFileSync(userFilePath, 'utf8');
+        isCopyTarget = fileData !== userFileData;
+      }
+
+      return isCopyTarget;
+    })
+    .map(file => path.resolve(rootDir, file));
 
   if (targetFiles.length === 0) return;
 

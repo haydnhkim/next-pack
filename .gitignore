@@ -270,7 +270,6 @@ $RECYCLE.BIN/
 # End of next-pack
 
 # next-pack development
-initialized
 dev/next-app/.*
 dev/next-app/*.js
 dev/next-app/yarn.lock
