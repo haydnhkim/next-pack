@@ -1,10 +1,8 @@
-const resolve = require('resolve');
-
+// plugins cannot be centralized ESLint configuration
 module.exports = {
   extends: [
-    resolve.sync('eslint-config-react-app'),
+    require.resolve('eslint-config-react-app'),
   ],
-  plugins: ['jsx-a11y', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/anchor-is-valid': [

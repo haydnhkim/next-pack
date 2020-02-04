@@ -5,8 +5,10 @@ const path = require('path');
   if (process.env.NODE_ENV !== 'development') return;
 
   const chokidar = require('chokidar');
+  const equal = require('fast-deep-equal');
   const { CLIEngine } = require('eslint');
   const { projectDir } = require('./paths');
+
   const userDirs = ['src', 'pages', 'components', 'server']
     .map(dir => path.resolve(projectDir, dir))
     .filter(dir => fs.existsSync(dir));
@@ -19,16 +21,36 @@ const path = require('path');
   ]
     .map(file => path.resolve(projectDir, file))
     .find(file => fs.existsSync(file));
+  const userEsLintConfig = userConfigFile && require(userConfigFile);
+  const userEsLintConfigRules = (userEsLintConfig || {}).rules || {};
+  const userEsLintConfigWithoutRules = userEsLintConfig && {
+    ...userEsLintConfig,
+    rules: {}
+  };
 
   const nextEsLintConfig = require(
     '../../../config/eslint.js'
   );
-  const baseConfig = {
+  const nextEsLintConfigWithoutRules = {
     ...nextEsLintConfig,
-    ...(userConfigFile && require(userConfigFile)),
+    rules: {}
   };
+  const hasCustomConfig = !!userEsLintConfig &&
+    !equal(userEsLintConfigWithoutRules, nextEsLintConfigWithoutRules);
+  const baseConfig = hasCustomConfig
+    ? userEsLintConfig
+    : {
+      ...nextEsLintConfig,
+      rules: {
+        ...nextEsLintConfig.rules,
+        ...userEsLintConfigRules,
+      }
+    };
   const esLintUserDirs = userDirs.map(dir => `${path.resolve(dir, '**/*.js')}`);
-  const cli = new CLIEngine({ baseConfig });
+  const cli = new CLIEngine({
+    baseConfig,
+    resolvePluginsRelativeTo: __dirname,
+  });
 
   // eslint execution function
   let lastLintRunTime;
@@ -44,6 +66,7 @@ const path = require('path');
       report = cli.executeOnFiles(esLintUserDirs);
       formatter = cli.getFormatter();
     } catch (err) {
+      if (hasCustomConfig) console.error(err);
       return;
     }
 
