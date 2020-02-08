@@ -71,7 +71,6 @@ const app = next({ dev });
 ```
 
 It is designed to use `@repacks/next-pack` instead of `next`.  
-If you want to use the import statement on the server, you can find examples in the `dev/next-app` folder.
 
 ## Features
 

@@ -1,6 +1,6 @@
-import { createServer } from 'http';
-import next from '@repacks/next-pack';
-import express from 'express';
+const { createServer } = require('http');
+const next = require('@repacks/next-pack');
+const express = require('express');
 
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';

@@ -5,7 +5,7 @@ const shell = require('shelljs');
 const nextAppDir = path.resolve(__dirname, '../../../dev/next-app');
 const removeTargetFiles = [];
 shell.ls('-A', nextAppDir).forEach(file => {
-  if (['node_modules', 'pages', 'src', 'package.json'].includes(file)) return;
+  if (['pages', 'src', 'package.json'].includes(file)) return;
 
   removeTargetFiles.push(path.resolve(nextAppDir, file));
 });

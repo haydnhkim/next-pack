@@ -10,9 +10,10 @@
   "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
   "license": "MIT",
   "main": "index.js",
-  "bin": {
-    "next-pack": "./bin/index.js"
-  },
+  "bin": "./bin/index.js",
+  "workspaces": [
+    "dev/next-app"
+  ],
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
@@ -45,20 +46,17 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
-    "execa": "^4.0.0",
     "jest": "^25.1.0",
-    "next": "9.x",
     "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
-    "react": "16.x",
-    "react-dom": "16.x",
     "release-it": "^12.4.3"
   },
   "peerDependencies": {
     "next": "9.x"
   },
   "engines": {
-    "node": ">= 8.9.0"
+    "node": ">= 10.0.0",
+    "yarn": ">= 2.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
@@ -71,20 +69,19 @@
     "/.*"
   ],
   "scripts": {
-    "dev": "yarn setup:link && yarn --cwd dev/next-app dev",
-    "dev-server": "yarn setup:link && NODE_ENV=development yarn --cwd dev/next-app server",
-    "test": "cross-env NODE_ENV=test jest",
-    "test-prod-setting": "yarn --cwd dev/next-app build && NODE_ENV=production yarn --cwd dev/next-app server",
-    "setup": "yarn && npm-run-all --sequential setup:*",
-    "setup:install": "yarn --cwd dev/next-app install",
-    "setup:link": "yarn link && yarn link @repacks/next-pack && yarn --cwd dev/next-app link @repacks/next-pack",
+    "dev": "yarn workspace dev-test-next-app dev",
+    "dev-server": "NODE_ENV=development yarn workspace dev-test-next-app server",
+    "test": "npm-run-all --parallel test:*",
+    "test:server": "yarn dev-server",
+    "test:jest": "NODE_ENV=test jest",
+    "test-prod-setting": "yarn workspace dev-test-next-app build && NODE_ENV=production yarn workspace dev-test-next-app server",
+    "setup": "yarn && yarn workspace dev-test-next-app install",
     "teardown": "node src/scripts/utils/teardown.js",
     "release": "release-it"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn setup:link && yarn teardown && git add package.json yarn.lock && npx lint-staged",
-      "post-commit": "yarn unlink @repacks/next-pack && yarn --cwd dev/next-app unlink @repacks/next-pack && yarn unlink"
+      "pre-commit": "yarn teardown && npx lint-staged"
     }
   },
   "lint-staged": {

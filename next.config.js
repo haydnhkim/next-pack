@@ -7,7 +7,6 @@ const { userNextConfig } = require('./src/scripts/utils/paths');
 const replaceTargetString = `page!=='\\/_error'&&pageScript`;
 (() => {
   if (process.env.NODE_ENV === 'production') return;
-
   const nextMainPath = resolve.sync('next', { basedir: process.cwd() });
   const targetPackageDir = '/node_modules/next/';
   const replaceTargetFile = `${nextMainPath.split(targetPackageDir)[0]}${targetPackageDir}dist/pages/_document.js`;
@@ -53,7 +52,7 @@ module.exports = {
           ...[
             {
               test: /_document\.js$/,
-              loader: resolve.sync('string-replace-loader'),
+              loader: require.resolve('string-replace-loader'),
               options: {
                 search: replaceTargetString,
                 replace: `

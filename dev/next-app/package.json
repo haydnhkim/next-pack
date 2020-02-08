@@ -6,19 +6,25 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@repacks/next-pack": "portal:../../../next-pack",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "isomorphic-unfetch": "^3.0.0",
-    "qs": "^6.9.1"
+    "next": "9.x",
+    "qs": "^6.9.1",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "@types/react": "^16.9.5",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "next-pack start",
     "dev": "next-pack",
     "build": "next-pack build",
-    "server": "node -r esm src/server/index.js"
-  },
-  "devDependencies": {
-    "@types/react": "^16.9.5",
-    "rimraf": "^3.0.0"
+    "server": "node src/server/index.js"
   }
 }
