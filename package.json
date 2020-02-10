@@ -64,8 +64,9 @@
     "/bin",
     "/src",
     "/config",
-    "/*.js",
-    "/.*.*"
+    "/*config*",
+    "/*rc.js",
+    "/.git*"
   ],
   "scripts": {
     "dev": "yarn workspace dev-test-next-app dev",
