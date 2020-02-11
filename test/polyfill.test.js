@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 
 beforeEach(() => {
   shell.cp(
-    path.resolve(__dirname, '../src/root/next.config.js'),
+    path.resolve(__dirname, '../packages/next-pack/src/root/next.config.js'),
     path.resolve(__dirname, '../dev/next-app/next.config.js')
   );
 });

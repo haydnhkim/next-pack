@@ -1,0 +1,64 @@
+{
+  "name": "@repacks/next-pack",
+  "version": "9.1.2",
+  "keywords": [
+    "react",
+    "next.js",
+    "managed-configration"
+  ],
+  "repository": "git@github.com:haydnhkim/next-pack.git",
+  "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "bin": "./bin/index.js",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-eslint": "10.x",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "chokidar": "^3.3.1",
+    "classlist-polyfill": "^1.2.0",
+    "cross-spawn": "^7.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-plugin-flowtype": "3.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.x",
+    "fast-deep-equal": "^3.1.1",
+    "html5shiv": "^3.7.3",
+    "husky": "^4.2.1",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-style-module": "^6.0.0",
+    "intersection-observer": "^0.7.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.0",
+    "react-app-polyfill": "^1.0.5",
+    "resolve": "^1.15.0",
+    "shelljs": "^0.8.3",
+    "string-replace-loader": "^2.2.0",
+    "typescript": "3.x",
+    "webpack": "4.x"
+  },
+  "peerDependencies": {
+    "next": "9.x"
+  },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "/packages/next-pack/bin",
+    "/packages/next-pack/src",
+    "/packages/next-pack/config",
+    "/*config*",
+    "/*rc.js",
+    "/.git*"
+  ],
+  "scripts": {
+    "release": "release-it"
+  }
+}
