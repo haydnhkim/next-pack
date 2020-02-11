@@ -41,6 +41,9 @@
     "typescript": "3.x",
     "webpack": "4.x"
   },
+  "devDependencies": {
+    "release-it": "^12.4.3"
+  },
   "peerDependencies": {
     "next": "9.x"
   },
