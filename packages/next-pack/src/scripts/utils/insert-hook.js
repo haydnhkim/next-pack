@@ -1,14 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 const { projectDir } = require('./paths');
-const userPackageJSonPath = path.resolve(projectDir, 'package.json');
-const userPackageJSon = require(userPackageJSonPath);
+const userPackageJsonPath = path.resolve(projectDir, 'package.json');
+const userPackageJson = require(userPackageJsonPath);
 
 // Add husky, lint-staged configuration to project package.json
 (() => {
   // Do not add if already added or for dev-test-next-app
   if (
-    userPackageJSon.husky || userPackageJSon.name === 'dev-test-next-app'
+    userPackageJson.husky || userPackageJson.name === 'dev-test-next-app'
   ) return;
 
   const hookConfig = {
@@ -24,15 +24,15 @@ const userPackageJSon = require(userPackageJSonPath);
   };
   const hookConfigKeys = Object.keys(hookConfig);
 
-  if (hookConfigKeys.every(key => userPackageJSon[key])) return;
+  if (hookConfigKeys.every(key => userPackageJson[key])) return;
 
   for (let key of hookConfigKeys) {
-    userPackageJSon[key] = hookConfig[key];
+    userPackageJson[key] = hookConfig[key];
   }
 
-  const newUserPackageJSon = JSON.stringify(userPackageJSon, null, 2);
+  const newUserPackageJSon = JSON.stringify(userPackageJson, null, 2);
 
   if (['', '""'].some(str => str === newUserPackageJSon.trim())) return;
 
-  fs.writeFileSync(userPackageJSonPath, newUserPackageJSon);
+  fs.writeFileSync(userPackageJsonPath, newUserPackageJSon);
 })();

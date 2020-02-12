@@ -65,6 +65,13 @@
     "release": "release-it"
   },
   "release-it": {
+    "github": {
+      "release": true
+    },
+    "git": {
+      "commitArgs": "--no-verify",
+      "pushArgs": "--no-verify"
+    },
     "hooks": {
       "before:init": "node ../../utils/prerelease.js",
       "after:release": "node ../../utils/teardown.js"
