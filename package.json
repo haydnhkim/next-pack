@@ -34,7 +34,7 @@
     "test:jest": "NODE_ENV=test jest",
     "test-prod-setting": "yarn workspace dev-test-next-app build && NODE_ENV=production yarn workspace dev-test-next-app server",
     "setup": "yarn workspaces foreach install",
-    "teardown": "node packages/next-pack/src/scripts/utils/teardown.js"
+    "teardown": "node utils/teardown.js"
   },
   "husky": {
     "hooks": {

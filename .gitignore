@@ -271,6 +271,9 @@ $RECYCLE.BIN/
 # End of next-pack
 
 # next-pack development
+packages/next-pack/*config*
+packages/next-pack/*rc.js
+packages/next-pack/.git*
 dev/next-app/.*
 dev/next-app/*.js
 dev/next-app/yarn.lock

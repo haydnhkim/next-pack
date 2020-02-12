@@ -42,6 +42,7 @@
     "webpack": "4.x"
   },
   "devDependencies": {
+    "npm-run-all": "^4.1.5",
     "release-it": "^12.4.3"
   },
   "peerDependencies": {
@@ -54,14 +55,17 @@
     "registry": "https://registry.npmjs.org"
   },
   "files": [
-    "/packages/next-pack/bin",
-    "/packages/next-pack/src",
-    "/packages/next-pack/config",
+    "/bin",
+    "/src",
+    "/config",
     "/*config*",
     "/*rc.js",
     "/.git*"
   ],
   "scripts": {
-    "release": "release-it"
+    "release": "npm-run-all --sequential release:*",
+    "release:pre": "node ../../utils/prerelease.js",
+    "release:run": "release-it",
+    "release:post": "node ../../utils/teardown.js"
   }
 }
