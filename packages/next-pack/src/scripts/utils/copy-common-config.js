@@ -5,7 +5,7 @@ const { projectDir } = require('./paths');
 
 // Copy specific configuration files to the project root
 (() => {
-  const workspaceRootDir = path.resolve(__dirname, '../../../../../');
+  const packageDir = path.resolve(__dirname, '../../../');
   const targetFiles = [
     '.editorconfig',
     '.gitattributes',
@@ -25,7 +25,7 @@ const { projectDir } = require('./paths');
         isCopyTarget = !isExistsFile;
       } else if (isExistsFile) {
         // Files with the same content data are not copy targets
-        const filePath = path.resolve(workspaceRootDir, file);
+        const filePath = path.resolve(packageDir, file);
         const fileData = fs.readFileSync(filePath, 'utf8');
         const userFileData = fs.readFileSync(userFilePath, 'utf8');
         isCopyTarget = fileData !== userFileData;
@@ -33,7 +33,7 @@ const { projectDir } = require('./paths');
 
       return isCopyTarget;
     })
-    .map(file => path.resolve(workspaceRootDir, file));
+    .map(file => path.resolve(packageDir, file));
 
   if (targetFiles.length === 0) return;
 
