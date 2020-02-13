@@ -15,7 +15,6 @@ const replaceTargetString = `page!=='\\/_error'&&pageScript`;
     'pages',
     '_document.js'
   );
-  console.log('replaceTargetFile', replaceTargetFile);
   const fileContent = fs.readFileSync(replaceTargetFile, 'utf-8');
 
   if (!new RegExp(replaceTargetString).test(fileContent)) {
