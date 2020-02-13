@@ -35,14 +35,5 @@
     "test-prod-setting": "yarn workspace dev-test-next-app build && NODE_ENV=production yarn workspace dev-test-next-app server",
     "setup": "yarn workspaces foreach install",
     "teardown": "node utils/teardown.js"
-  },
-  "release-it": {
-    "github": {
-      "release": true
-    },
-    "git": {
-      "commitArgs": "--no-verify",
-      "pushArgs": "--no-verify"
-    }
   }
 }

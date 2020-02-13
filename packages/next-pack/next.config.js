@@ -8,8 +8,14 @@ const replaceTargetString = `page!=='\\/_error'&&pageScript`;
 (() => {
   if (process.env.NODE_ENV === 'production') return;
   const nextMainPath = resolve.sync('next', { basedir: process.cwd() });
-  const targetPackageDir = '/node_modules/next/';
-  const replaceTargetFile = `${nextMainPath.split(targetPackageDir)[0]}${targetPackageDir}dist/pages/_document.js`;
+  const targetPackageDir = path.join('node_modules', 'next');
+  const replaceTargetFile = path.resolve(
+    `${nextMainPath.split(targetPackageDir)[0]}${targetPackageDir}`,
+    'dist',
+    'pages',
+    '_document.js'
+  );
+  console.log('replaceTargetFile', replaceTargetFile);
   const fileContent = fs.readFileSync(replaceTargetFile, 'utf-8');
 
   if (!new RegExp(replaceTargetString).test(fileContent)) {
