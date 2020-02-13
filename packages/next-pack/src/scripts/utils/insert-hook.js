@@ -18,7 +18,7 @@ const userPackageJson = require(userPackageJsonPath);
       },
     },
     'lint-staged': {
-      '*.{js,ts}': ['import-sort --write', 'prettier --write', 'git add'],
+      '*.{js,ts,tsx}': ['import-sort --write', 'prettier --write', 'git add'],
       '*.{md,css,html}': ['prettier --write', 'git add'],
     },
   };
