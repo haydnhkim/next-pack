@@ -1,15 +1,19 @@
 ## Folder structure
 
 ```
-/next-pack
-  /bin            - cli executable
-  /client         - script files for the browser (polyfill)
-  /config         - *rc related files common configuration
-  /dev/next-app   - project for next-app development
-  /root           - Files to copy into user project folder
-  /scripts        - Files to be used by the cli command of next-pack
-    /utils        - next-pack utilities files
-  .miscellaneous_configuration_files
+/next-pack               - @repacks/next-pack workspace root
+  /dev/next-app          - project for next-app development
+  /packages/next-pack    - @repacks/next-pack workspace
+    /bin                 - cli executable
+    /config              - *rc related files common configuration
+    /src                 - @repacks/next-pack source files
+      /client            - script files for the browser (polyfill)
+      /root              - Files to copy into user project folder
+      /scripts           - Files to be used by the cli command of next-pack
+        /utils           - next-pack utility files
+    .miscellaneous_configuration_files
+  /test                  - test files
+  /utils                 - development utility files
 ```
 
 - Configuration files in the `/next-pack/root/*` folder are first copied to the user project folder.  
@@ -22,7 +26,7 @@
 
 ## Development environment setting
 
-[yarn](https://yarnpkg.com/en/docs/install) is required for `next-pack` development.
+[yarn 2](https://yarnpkg.com/getting-started/install) is required for `next-pack` development.
 
 `next-pack` can only be used if there is a project to add as a dependency.  
 For this I have set up the `/dev/next-app` project.  
@@ -34,9 +38,8 @@ yarn setup
 
 You can now make changes as needed.  
 You can check it by running a test app through `yarn dev`.  
-There are functions that prevent you from recreating after initial creation. Delete the `initialized` file or comment out the check to proceed with development.
+If you want to delete the auto-generated files, run `yarn teardown`.
 
 ## After development
 
-If you commit your work after development, the yarn setup will be cleaned up automatically.  
-You don't have to worry about next, react and react-dom added to package.json and yarn.lock.
+Auto-generated files are registered in `.gitignore` so you can commit without worry.

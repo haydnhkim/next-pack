@@ -27,12 +27,12 @@
     "yarn": ">= 2.0.0"
   },
   "scripts": {
-    "dev": "yarn workspace dev-test-next-app dev",
-    "dev-server": "NODE_ENV=development yarn workspace dev-test-next-app server",
+    "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
+    "dev-server": "NODE_ENV=development yarn workspace @repacks/next-app server",
     "test": "npm-run-all --parallel test:*",
     "test:server": "yarn dev-server",
     "test:jest": "NODE_ENV=test jest",
-    "test-prod-setting": "yarn workspace dev-test-next-app build && NODE_ENV=production yarn workspace dev-test-next-app server",
+    "test-prod-setting": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
     "setup": "yarn workspaces foreach install",
     "teardown": "node utils/teardown.js"
   }

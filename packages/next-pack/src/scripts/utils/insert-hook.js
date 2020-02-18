@@ -6,9 +6,9 @@ const userPackageJson = require(userPackageJsonPath);
 
 // Add husky, lint-staged configuration to project package.json
 (() => {
-  // Do not add if already added or for dev-test-next-app
+  // Do not add if already added or for @repacks/next-app
   if (
-    userPackageJson.husky || userPackageJson.name === 'dev-test-next-app'
+    userPackageJson.husky || userPackageJson.name === '@repacks/next-app'
   ) return;
 
   const hookConfig = {
