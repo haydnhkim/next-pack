@@ -36,5 +36,30 @@
     "test-prod-setting": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
     "setup": "yarn workspaces foreach install",
     "teardown": "node utils/teardown.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn teardown && npx lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "import-sort --write",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{md,css,html}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "git": {
+      "commitArgs": "--no-verify",
+      "pushArgs": "--no-verify"
+    }
   }
 }
