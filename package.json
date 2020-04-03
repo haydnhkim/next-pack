@@ -12,12 +12,12 @@
     "husky": "^4.2.1",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-module": "^6.0.0",
-    "lint-staged": "^10.0.7",
-    "prettier": "^1.19.0"
+    "lint-staged": "^10.1.1",
+    "prettier": "^2.0.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.0",
-    "jest": "^25.1.0",
+    "jest": "^25.2.6",
     "lerna": "^3.20.2",
     "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
@@ -30,7 +30,7 @@
   "scripts": {
     "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
     "dev-server": "NODE_ENV=development yarn workspace @repacks/next-app server",
-    "test": "npm-run-all --parallel test:*",
+    "test": "node utils/prerelease.js && npm-run-all --parallel test:*",
     "test:server": "yarn dev-server",
     "test:jest": "NODE_ENV=test jest",
     "test-prod-setting": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
@@ -45,12 +45,10 @@
   "lint-staged": {
     "*.{js,ts}": [
       "import-sort --write",
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ],
     "*.{md,css,html}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

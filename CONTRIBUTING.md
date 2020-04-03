@@ -44,3 +44,7 @@ If you want to delete the auto-generated files, run `yarn teardown`.
 ## After development
 
 Auto-generated files are registered in `.gitignore` so you can commit without worry.
+
+```sh
+yarn release
+```
