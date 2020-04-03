@@ -34,7 +34,7 @@
     "test:server": "yarn dev-server",
     "test:jest": "NODE_ENV=test jest",
     "test-prod-setting": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
-    "setup": "yarn workspaces foreach install",
+    "release": "yarn workspace @repacks/next-pack release",
     "teardown": "node utils/teardown.js"
   },
   "husky": {
@@ -52,14 +52,5 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "release-it": {
-    "github": {
-      "release": true
-    },
-    "git": {
-      "commitArgs": "--no-verify",
-      "pushArgs": "--no-verify"
-    }
   }
 }

@@ -3,6 +3,7 @@
 ```
 /next-pack               - @repacks/next-pack workspace root
   /dev/next-app          - project for next-app development
+  /dev/workdir           - workspace root test directory
   /packages/next-pack    - @repacks/next-pack workspace
     /bin                 - cli executable
     /config              - *rc related files common configuration
@@ -26,7 +27,7 @@
 
 ## Development environment setting
 
-[yarn 2](https://yarnpkg.com/getting-started/install) is required for `next-pack` development.
+[yarn 1](https://www.npmjs.com/package/yarn) is required for `next-pack` development.
 
 `next-pack` can only be used if there is a project to add as a dependency.  
 For this I have set up the `/dev/next-app` project.  
