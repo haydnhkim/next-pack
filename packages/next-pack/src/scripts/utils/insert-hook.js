@@ -1,7 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const { projectDir } = require('./paths');
-const userPackageJsonPath = path.resolve(projectDir, 'package.json');
+const { workspaceRoot, projectDir } = require('./paths');
+const targetDir = workspaceRoot || projectDir;
+const userPackageJsonPath = path.resolve(targetDir, 'package.json');
 const userPackageJson = require(userPackageJsonPath);
 
 // Add husky, lint-staged configuration to project package.json

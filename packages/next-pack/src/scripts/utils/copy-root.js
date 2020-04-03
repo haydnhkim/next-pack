@@ -4,6 +4,7 @@ const shell = require('shelljs');
 const { projectDir } = require('./paths');
 
 // Copy files in root folder to project root
+// Currently only move next.config.js
 (() => {
   const rootDir = path.resolve(__dirname, '../../root');
 

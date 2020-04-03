@@ -1,0 +1,8 @@
+{
+  "name": "@repacks/workdir",
+  "version": "1.0.0",
+  "main": "src/hi.js",
+  "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
+  "license": "MIT",
+  "private": true
+}

@@ -72,6 +72,36 @@ const app = next({ dev });
 
 It is designed to use `@repacks/next-pack` instead of `next`.  
 
+## config
+
+For custom advanced behavior of next-pack, You can use `next.config.js` in the configuration file of Next.js. Add a `nextPack` field in it.    
+Take a look at the following `next.config.js` example:  
+
+```js
+module.exports = {
+  nextPack: {
+    workspaceRoot: path.resolve(__dirname),
+    eslint: {
+      disable: true,
+      files: [],
+    },
+  }
+}
+```
+
+#### workspaceRoot (optional)
+
+You can set the workspace's root folder as an absolute path.  
+Each configuration file is created in the folder set as the workspace root.  
+If not set, the project's root folder is the workspace's root folder.
+
+#### eslint (optional)
+
+- `eslint.disable` {boolean} (optional): default false.  
+  turn on/off eslint execution.
+- `eslint.files`: {Array<string>} (optional): default ['src', 'pages', 'components', 'server'].  
+  Configuration by using the [glob pattern](https://eslint.org/docs/user-guide/configuring#configuration-based-on-glob-patterns) for the files being watched.
+
 ## Features
 
 When running next-pack, the local development and production environment does the following:

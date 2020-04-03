@@ -2,16 +2,24 @@ const fs = require('fs');
 const path = require('path');
 
 (() => {
-  if (process.env.NODE_ENV !== 'development') return;
+  const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
+  const { disable, files } = userNextConfig.nextPack.eslint || {};
+
+  if (process.env.NODE_ENV !== 'development' || disable) return;
 
   const chokidar = require('chokidar');
   const equal = require('fast-deep-equal');
   const { CLIEngine } = require('eslint');
-  const { projectDir } = require('./paths');
 
-  const userDirs = ['src', 'pages', 'components', 'server']
-    .map(dir => path.resolve(projectDir, dir))
-    .filter(dir => fs.existsSync(dir));
+  const targetDir = workspaceRoot || projectDir;
+
+  const userDirs = files
+    ? [...new Set(files.map(n =>
+        path.resolve(n.replace(/\*\*\/\*\..+/, ''))
+      ))]
+    : ['src', 'pages', 'components', 'server']
+      .map(dir => path.resolve(targetDir, dir))
+      .filter(dir => fs.existsSync(dir));
   const userConfigFile = [
     '.eslintrc.js',
     '.eslintrc.yaml',
@@ -19,7 +27,7 @@ const path = require('path');
     '.eslintrc',
     '.eslintrc.json',
   ]
-    .map(file => path.resolve(projectDir, file))
+    .map(file => path.resolve(targetDir, file))
     .find(file => fs.existsSync(file));
   const userEsLintConfig = userConfigFile && require(userConfigFile);
   const userEsLintConfigRules = (userEsLintConfig || {}).rules || {};
@@ -46,10 +54,18 @@ const path = require('path');
         ...userEsLintConfigRules,
       }
     };
-  const esLintUserDirs = userDirs.map(dir => `${path.resolve(dir, '**/*.js')}`);
+  const eslintUserDirs = files ||
+    userDirs
+      .map(dir => [
+        `${path.resolve(dir, '**/*.js')}`,
+        `${path.resolve(dir, '**/*.ts')}`,
+        `${path.resolve(dir, '**/*.tsx')}`
+      ])
+      .reduce((a, b) => a.concat(b), []);
   const cli = new CLIEngine({
     baseConfig,
     resolvePluginsRelativeTo: __dirname,
+    errorOnUnmatchedPattern: false,
   });
 
   // eslint execution function
@@ -63,7 +79,7 @@ const path = require('path');
     let report;
     let formatter = () => {};
     try {
-      report = cli.executeOnFiles(esLintUserDirs);
+      report = cli.executeOnFiles(eslintUserDirs);
       formatter = cli.getFormatter();
     } catch (err) {
       if (hasCustomConfig) console.error(err);
@@ -89,7 +105,7 @@ const path = require('path');
   }, 100);
 
   const watcher = chokidar.watch(userDirs, {
-    ignored: /(^|[\/\\])\../,
+    ignored: /(^|[/\\])\../,
     persistent: true,
   });
 

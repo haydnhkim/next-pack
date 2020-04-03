@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
-const { projectDir } = require('./paths');
+const { workspaceRoot, projectDir } = require('./paths');
+const targetDir = workspaceRoot || projectDir;
 
 // Copy specific configuration files to the project root
 (() => {
@@ -16,7 +17,7 @@ const { projectDir } = require('./paths');
     .filter(file => {
       const isJsConfigFile = ['rc.js', 'config.js']
         .some(end => file.endsWith(end));
-      const userFilePath = path.resolve(projectDir, file);
+      const userFilePath = path.resolve(targetDir, file);
       const isExistsFile = fs.existsSync(userFilePath);
       let isCopyTarget = false;
 
@@ -37,5 +38,5 @@ const { projectDir } = require('./paths');
 
   if (targetFiles.length === 0) return;
 
-  shell.cp(targetFiles, projectDir);
+  shell.cp(targetFiles, targetDir);
 })();

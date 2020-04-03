@@ -1,9 +1,10 @@
 const path = require('path');
 const fs = require('fs');
 const shell = require('shelljs');
-const { projectDir } = require('./paths');
+const { projectDir, workspaceRoot } = require('./paths');
+const targetDir = workspaceRoot || projectDir;
 
-const userGitIgnorePath = path.resolve(projectDir, '.gitignore');
+const userGitIgnorePath = path.resolve(targetDir, '.gitignore');
 const gitIgnorePath = path.resolve(__dirname, '../../../config/gitignore.txt');
 const sharedGitIgnoreRegExp = /# Created by https:\/\/www.gitignore.io.+[^]+# End of next-pack/;
 

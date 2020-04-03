@@ -265,17 +265,18 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows,webstorm,visualstudiocode
 
-# next-pack
-.yarn
-.pnp.*
-# End of next-pack
-
 # next-pack development
 packages/next-pack/*config*
 packages/next-pack/*rc.js
+packages/next-pack/*.md
 packages/next-pack/.git*
 dev/next-app/.*
 dev/next-app/*.js
 dev/next-app/yarn.lock
 dev/next-app/next-env.d.ts
 dev/next-app/tsconfig.json
+dev/workdir/.*
+dev/workdir/*.js
+dev/workdir/yarn.lock
+dev/workdir/next-env.d.ts
+dev/workdir/tsconfig.json

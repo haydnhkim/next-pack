@@ -5,5 +5,4 @@ module.exports = [
   'index.js',
   'next.config.js',
   'package.json',
-  'README.md',
 ];

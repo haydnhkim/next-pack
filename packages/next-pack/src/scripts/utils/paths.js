@@ -1,19 +1,22 @@
 const path = require('path');
 const fs = require('fs');
-
+const findUp = require('find-up');
 const projectDir = path.resolve(fs.realpathSync(process.cwd()));
-const userPackageJson = require(path.resolve(projectDir, 'package.json'));
-const userNextConfigPath = path.resolve(projectDir, 'next.config.js');
+
+const userNextConfigPath = findUp.sync('next.config.js', {
+  cwd: projectDir,
+}) || path.resolve(projectDir, 'next.config.js');
 
 let userNextConfig = {};
 if (fs.existsSync(userNextConfigPath)) {
   userNextConfig = require(userNextConfigPath);
 }
 userNextConfig.nextPack = userNextConfig.nextPack || {};
+const { workspaceRoot } = userNextConfig.nextPack;
 
 module.exports = {
   projectDir,
-  userPackageJson,
+  workspaceRoot,
   userNextConfigPath,
   userNextConfig,
 };
