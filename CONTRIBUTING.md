@@ -34,7 +34,7 @@ For this I have set up the `/dev/next-app` project.
 You can set the development environment with the following command.
 
 ```sh
-yarn setup
+yarn
 ```
 
 You can now make changes as needed.  
