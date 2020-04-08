@@ -70,12 +70,12 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 ```
 
-It is designed to use `@repacks/next-pack` instead of `next`.  
+It is designed to use `@repacks/next-pack` instead of `next`.
 
-## config
+## configs
 
-For custom advanced behavior of next-pack, You can use `next.config.js` in the configuration file of Next.js. Add a `nextPack` field in it.    
-Take a look at the following `next.config.js` example:  
+For custom advanced behavior of next-pack, You can use `next.config.js` in the configuration file of Next.js. Add a `nextPack` field in it.  
+Take a look at the following `next.config.js` example:
 
 ```js
 module.exports = {
@@ -85,8 +85,8 @@ module.exports = {
       disable: true,
       files: [],
     },
-  }
-}
+  },
+};
 ```
 
 #### workspaceRoot (optional)
@@ -134,7 +134,7 @@ The `next-pack/index.js` file is implemented simply by calling `next` with the a
 require('./packages/next-pack/src/scripts/utils/bootstrap'); // Invoking the function of next-pack
 const next = require('next');
 
-module.exports = options => {
+module.exports = (options) => {
   // pass next as is
   return next(options);
 };
