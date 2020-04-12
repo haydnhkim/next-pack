@@ -7,7 +7,7 @@ const bootstrap = () => {
   if (!dev) return;
 
   // for dev mode
-  require('./run-eslint');
+  require('./run-eslint-activate');
   require('./copy-root');
   require('./copy-common-config');
   require('./upsert-gitignore');

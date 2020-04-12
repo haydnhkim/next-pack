@@ -1,22 +1,17 @@
 const fs = require('fs');
 const path = require('path');
+const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
 
 (() => {
-  const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
-  const { disable, files } = userNextConfig.nextPack.eslint || {};
-
-  if (process.env.NODE_ENV !== 'development' || disable) return;
-
   const chokidar = require('chokidar');
   const equal = require('fast-deep-equal');
   const { CLIEngine } = require('eslint');
 
+  const { files } = userNextConfig.nextPack.eslint || {};
   const targetDir = workspaceRoot || projectDir;
 
   const userDirs = files
-    ? [...new Set(files.map(n =>
-        path.resolve(n.replace(/\*\*\/\*\..+/, ''))
-      ))]
+    ? [...new Set(files)]
     : ['src', 'pages', 'components', 'server']
       .map(dir => path.resolve(targetDir, dir))
       .filter(dir => fs.existsSync(dir));
@@ -71,7 +66,7 @@ const path = require('path');
   // eslint execution function
   let lastLintRunTime;
   let prevMessage;
-  const lint = () => {
+  const lint = path => {
     // Return if rerun within 2 seconds
     if (Date.now() < lastLintRunTime + 2000) return;
 
@@ -79,7 +74,7 @@ const path = require('path');
     let report;
     let formatter = () => {};
     try {
-      report = cli.executeOnFiles(eslintUserDirs);
+      report = cli.executeOnFiles(path || eslintUserDirs);
       formatter = cli.getFormatter();
     } catch (err) {
       if (hasCustomConfig) console.error(err);
