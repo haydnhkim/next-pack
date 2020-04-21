@@ -3,19 +3,15 @@ const dev = process.env.NODE_ENV === 'development';
 const { userNextConfigPath } = require('./paths');
 const nextConfig = require('../../../next.config');
 
-const bootstrap = () => {
-  if (!dev) return;
-
-  // for dev mode
-  require('./run-eslint-activate');
-  require('./copy-root');
-  require('./copy-common-config');
-  require('./upsert-gitignore');
-  require('./insert-hook');
-};
-
-(() => {
-  bootstrap();
+const bootstrap = (command) => {
+  if (dev && command === 'dev') {
+    // for dev mode
+    require('./run-eslint-activate');
+    require('./copy-root');
+    require('./copy-common-config');
+    require('./upsert-gitignore');
+    require('./insert-hook');
+  }
 
   try {
     // override next.config in memory
@@ -25,4 +21,6 @@ const bootstrap = () => {
 Please \x1b[35mrun it again\x1b[0m.`);
     process.exit();
   }
-})();
+};
+
+module.exports = bootstrap;
