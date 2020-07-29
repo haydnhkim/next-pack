@@ -1,23 +1,12 @@
-const fs = require('fs');
 const path = require('path');
-const resolve = require('resolve');
+const { CLIENT_STATIC_FILES_RUNTIME_POLYFILLS } = require('next/constants');
 const { userNextConfig } = require('./src/scripts/utils/paths');
 
 // Check for insert polyfill
-const replaceTargetString = `page!=='\\/_error'&&pageScript`;
 (() => {
   if (process.env.NODE_ENV === 'production') return;
-  const nextMainPath = resolve.sync('next', { basedir: process.cwd() });
-  const targetPackageDir = path.join('node_modules', 'next');
-  const replaceTargetFile = path.resolve(
-    `${nextMainPath.split(targetPackageDir)[0]}${targetPackageDir}`,
-    'dist',
-    'pages',
-    '_document.js'
-  );
-  const fileContent = fs.readFileSync(replaceTargetFile, 'utf-8');
 
-  if (!new RegExp(replaceTargetString).test(fileContent)) {
+  if (!CLIENT_STATIC_FILES_RUNTIME_POLYFILLS) {
     console.error(
       '[\x1b[31m %s \x1b[0m]',
       'error',
@@ -33,8 +22,7 @@ Please check for new releases of next-pack or pull request to next-pack as chang
 module.exports = {
   ...userNextConfig,
   webpack(config, args) {
-    const { buildId, isServer } = args;
-    const polyfillsPath = `static/runtime/polyfills-next-pack-${buildId}.js`;
+    const { isServer } = args;
 
     const newConfig = {
       ...config,
@@ -43,36 +31,13 @@ module.exports = {
         : async () => {
             const entries = await config.entry();
 
-            if (!entries[polyfillsPath])
-              entries[polyfillsPath] = [
-                path.resolve(__dirname, 'src/client/polyfills.js'),
-              ];
+            entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS] = [
+              entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS],
+              path.resolve(__dirname, 'src/client/polyfills.js'),
+            ];
 
             return entries;
           },
-      module: {
-        ...config.module,
-        rules: [
-          ...(config.module.rules || []),
-          ...[
-            {
-              test: /_document\.js$/,
-              loader: require.resolve('string-replace-loader'),
-              options: {
-                search: replaceTargetString,
-                replace: `
-                  _react["default"].createElement("script", {
-                    src: assetPrefix + "/_next/${polyfillsPath}",
-                    nonce: this.props.nonce,
-                    crossOrigin: this.props.crossOrigin || ${process.crossOrigin}
-                  }),
-                  page !== '/_error' && pageScript`,
-                flags: 'gm',
-              },
-            },
-          ],
-        ],
-      },
     };
 
     return userNextConfig.webpack
