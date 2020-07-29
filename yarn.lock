@@ -3501,6 +3501,13 @@ bser@2.1.1:
   dependencies:
     node-int64 "^0.4.0"
 
+bthreads@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/bthreads/-/bthreads-0.5.1.tgz#c7a4dacc2d159c50de08b37b1e2a7da836171063"
+  integrity sha512-nK7Jo9ll+r1FRMNPWEFRTZMQrX6HhX8JjPAofxmbTNILHqWVIJPmWzCi9JlX/K0DL5AKZTFZg2Qser5C6gVs9A==
+  dependencies:
+    bufio "~1.0.5"
+
 btoa-lite@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/btoa-lite/-/btoa-lite-1.0.0.tgz#337766da15801210fdd956c22e9c6891ab9d0337"
@@ -3524,6 +3531,11 @@ buffer@^4.3.0:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
     isarray "^1.0.0"
+
+bufio@~1.0.5:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/bufio/-/bufio-1.0.7.tgz#b7f63a1369a0829ed64cc14edf0573b3e382a33e"
+  integrity sha512-bd1dDQhiC+bEbEfg56IdBv7faWa6OipMs/AFFFvtFnB3wAYjlwQpQRZ0pm6ZkgtfL0pILRXhKxOiQj6UzoMR7A==
 
 builtin-modules@^3.0.0:
   version "3.1.0"

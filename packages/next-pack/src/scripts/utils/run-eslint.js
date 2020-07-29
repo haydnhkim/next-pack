@@ -1,8 +1,21 @@
 const fs = require('fs');
 const path = require('path');
+const threads = require('bthreads');
 const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
 
+const setTTY = () => {
+  if (threads.workerData.isTTY) {
+    for (const stream of ['stdout', 'stdin', 'stderr']) {
+      if (process[stream].isTTY === undefined) {
+        process[stream].isTTY = true
+      }
+    }
+  }
+};
+
 (() => {
+  if (threads.isMainThread) return;
+
   const chokidar = require('chokidar');
   const equal = require('fast-deep-equal');
   const { CLIEngine } = require('eslint');
@@ -63,6 +76,8 @@ const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
     errorOnUnmatchedPattern: false,
   });
 
+  setTTY();
+
   // eslint execution function
   let lastLintRunTime;
   let prevMessage;
@@ -93,7 +108,7 @@ const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
     if (message === prevMessage) return;
 
     prevMessage = message;
-    console.log(message);
+    threads.parentPort.postMessage(message);
   };
   setTimeout(() => {
     lint();

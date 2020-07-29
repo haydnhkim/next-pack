@@ -16,6 +16,7 @@
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "bthreads": "^0.5.1",
     "chokidar": "^3.4.1",
     "classlist-polyfill": "^1.2.0",
     "cross-spawn": "^7.0.3",
