@@ -82,25 +82,48 @@ module.exports = {
   nextPack: {
     workspaceRoot: path.resolve(__dirname),
     eslint: {
-      disable: true,
+      disable: false,
       files: [],
     },
+    reactRefresh: true,
   },
 };
 ```
 
-#### workspaceRoot (optional)
+#### workspaceRoot
+
+`workspaceRoot` {String} (optional): default `workspace's root folder`
 
 You can set the workspace's root folder as an absolute path.  
 Each configuration file is created in the folder set as the workspace root.  
 If not set, the project's root folder is the workspace's root folder.
 
-#### eslint (optional)
+#### eslint
 
-- `eslint.disable` {boolean} (optional): default false.  
+- `eslint` {Object} (optional): default `{}`
+- `eslint.disable` {Boolean} (optional): default `false`  
   turn on/off eslint execution.
-- `eslint.files`: {Array<string>} (optional): default ['src', 'pages', 'components', 'server'].  
+- `eslint.files` {Array<string>} (optional): default `['src', 'pages', 'components', 'server']`  
   Configuration by using the [glob pattern](https://eslint.org/docs/user-guide/configuring#configuration-based-on-glob-patterns) for the files being watched.
+  
+#### reactRefresh
+
+`reactRefresh` {Boolean} (optional): default `true`
+
+react-refresh does not run on IE10 or lower.  
+If you want to debug in development mode, set reactRefresh to false.
+
+Another way is to set the environment variable value to `REACT_REFRESH=false`.  
+If you use this method, you can conveniently use it as a command in scripts as below.
+
+```json
+{
+  "scripts": {
+    "dev": "next-pack",
+    "dev-ie": "REACT_REFRESH=false next-pack"
+  }
+}
+```
 
 ## Features
 

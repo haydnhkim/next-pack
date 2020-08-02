@@ -11,7 +11,10 @@ let userNextConfig = {};
 if (fs.existsSync(userNextConfigPath)) {
   userNextConfig = require(userNextConfigPath);
 }
-userNextConfig.nextPack = userNextConfig.nextPack || {};
+userNextConfig.nextPack = userNextConfig.nextPack || {
+  eslint: {},
+  reactRefresh: true
+};
 const { workspaceRoot } = userNextConfig.nextPack;
 
 module.exports = {

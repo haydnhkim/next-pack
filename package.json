@@ -9,19 +9,19 @@
     "dev/*"
   ],
   "dependencies": {
-    "husky": "^4.2.1",
+    "husky": "^4.2.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-module": "^6.0.0",
-    "lint-staged": "^10.1.1",
-    "prettier": "^2.0.2"
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   },
   "devDependencies": {
-    "cross-env": "^7.0.0",
-    "jest": "^25.2.6",
-    "lerna": "^3.20.2",
+    "cross-env": "^7.0.2",
+    "jest": "^26.2.2",
+    "lerna": "^3.22.1",
     "node-fetch": "^2.6.0",
     "npm-run-all": "^4.1.5",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.4"
   },
   "engines": {
     "node": ">=12.0.0",
@@ -30,6 +30,7 @@
   "scripts": {
     "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
     "dev-server": "NODE_ENV=development yarn workspace @repacks/next-app server",
+    "dev-ie": "REACT_REFRESH=false yarn dev",
     "test": "node utils/prerelease.js && npm-run-all --parallel test:*",
     "test:server": "yarn dev-server",
     "test:jest": "NODE_ENV=test jest",

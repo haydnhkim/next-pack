@@ -18,15 +18,15 @@ test(
     const intervalId = setInterval(async () => {
       let res;
       try {
-        res = await fetch('http://localhost:3000');
+        res = await fetch(`http://localhost:3000/_next/static/chunks/polyfills.js?ts=${Date.now()}`);
       } catch(err) {
         return;
       }
-      const html = await res.text();
+      const js = await res.text();
 
-      if (!html.includes('html')) return;
+      if (!js.includes('polyfills')) return;
 
-      const hasPolyfill = html.includes('polyfills-next-pack-');
+      const hasPolyfill = js.includes('next-pack/src/client');
       expect(hasPolyfill).toBeTruthy();
       if (hasPolyfill) clearInterval(intervalId);
       done();

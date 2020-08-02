@@ -1,5 +1,4 @@
 import qs from 'qs';
-import fetch from 'isomorphic-unfetch';
 
 const xhrProxy = async (req, res) => {
   const { method, query, headers = {}, body } = req;

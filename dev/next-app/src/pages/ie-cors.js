@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import fetch from 'isomorphic-unfetch';
 
 const readyText = '✨ Please click the fetch button! ✨';
 const loadingText = '⚡ Loading...';

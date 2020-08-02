@@ -1,5 +1,8 @@
 const path = require('path');
-const { CLIENT_STATIC_FILES_RUNTIME_POLYFILLS } = require('next/constants');
+const {
+  CLIENT_STATIC_FILES_RUNTIME_POLYFILLS,
+  CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH
+} = require('next/constants');
 const { userNextConfig } = require('./src/scripts/utils/paths');
 
 // Check for insert polyfill
@@ -31,10 +34,24 @@ module.exports = {
         : async () => {
             const entries = await config.entry();
 
-            entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS] = [
-              entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS],
-              path.resolve(__dirname, 'src/client/polyfills.js'),
-            ];
+            // Add more polyfills for IE9
+            const polyfills = entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS];
+            if (polyfills)
+              entries[CLIENT_STATIC_FILES_RUNTIME_POLYFILLS] = [
+                polyfills,
+                path.resolve(__dirname, 'src/client/polyfills.js'),
+              ];
+
+            // Disable react-refresh
+            if (
+              (
+                userNextConfig.nextPack.reactRefresh === false ||
+                process.env.REACT_REFRESH === 'false'
+              ) &&
+              CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH &&
+              entries[CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH]
+            )
+              delete entries[CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH];
 
             return entries;
           },
