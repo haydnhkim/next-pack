@@ -13,6 +13,7 @@ const Page = () => {
     <>
       <Head>
         <title>Main!</title>
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       </Head>
 
       <div>

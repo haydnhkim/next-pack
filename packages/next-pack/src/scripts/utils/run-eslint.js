@@ -16,6 +16,9 @@ const setTTY = () => {
 (() => {
   if (threads.isMainThread) return;
 
+  // setTTY is required to run before eslint is imported
+  setTTY();
+
   const chokidar = require('chokidar');
   const equal = require('fast-deep-equal');
   const { CLIEngine } = require('eslint');
@@ -75,8 +78,6 @@ const setTTY = () => {
     resolvePluginsRelativeTo: __dirname,
     errorOnUnmatchedPattern: false,
   });
-
-  setTTY();
 
   // eslint execution function
   let lastLintRunTime;
