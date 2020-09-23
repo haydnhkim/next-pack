@@ -20,7 +20,7 @@ const setTTY = () => {
   setTTY();
 
   const chokidar = require('chokidar');
-  const equal = require('fast-deep-equal');
+  const { dequal } = require('dequal');
   const { CLIEngine } = require('eslint');
 
   const { files } = userNextConfig.nextPack.eslint || {};
@@ -55,7 +55,7 @@ const setTTY = () => {
     rules: {}
   };
   const hasCustomConfig = !!userEsLintConfig &&
-    !equal(userEsLintConfigWithoutRules, nextEsLintConfigWithoutRules);
+    !dequal(userEsLintConfigWithoutRules, nextEsLintConfigWithoutRules);
   const baseConfig = hasCustomConfig
     ? userEsLintConfig
     : {
