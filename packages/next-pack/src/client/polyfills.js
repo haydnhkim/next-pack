@@ -5,7 +5,7 @@ import 'html5shiv';
 import 'intersection-observer';
 import 'matchmedia-polyfill';
 import 'matchmedia-polyfill/matchMedia.addListener';
-import 'proxy-polyfill';
+import 'proxy-polyfill/proxy.min';
 import raf from 'raf';
 import './location-history';
 import './support-base-tag';
