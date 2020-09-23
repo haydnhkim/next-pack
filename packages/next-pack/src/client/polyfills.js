@@ -4,6 +4,7 @@ import 'html5shiv';
 import 'intersection-observer';
 import 'matchmedia-polyfill';
 import 'matchmedia-polyfill/matchMedia.addListener';
+import 'proxy-polyfill';
 import '@webcomponents/shadydom';
 import raf from 'raf';
 import './location-history';
