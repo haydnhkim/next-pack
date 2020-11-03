@@ -1,5 +1,4 @@
 import 'react-app-polyfill/stable';
-import '@webcomponents/shadydom';
 import 'classlist-polyfill';
 import 'html5shiv';
 import 'intersection-observer';
