@@ -105,7 +105,7 @@ If not set, the project's root folder is the workspace's root folder.
   turn on/off eslint execution.
 - `eslint.files` {Array<string>} (optional): default `['src', 'pages', 'components', 'server']`  
   Configuration by using the [glob pattern](https://eslint.org/docs/user-guide/configuring#configuration-based-on-glob-patterns) for the files being watched.
-  
+
 #### reactRefresh
 
 `reactRefresh` {Boolean} (optional): default `true`
@@ -154,7 +154,7 @@ This allows for the automatic loading of polyfills in separate projects without 
 The `next-pack/index.js` file is implemented simply by calling `next` with the addition of the parts that `next-pack` handles.
 
 ```js
-require('./packages/next-pack/src/scripts/utils/bootstrap'); // Invoking the function of next-pack
+require('./packages/next-pack/src/utils/bootstrap'); // Invoking the function of next-pack
 const next = require('next');
 
 module.exports = (options) => {

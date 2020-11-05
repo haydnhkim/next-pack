@@ -47,7 +47,7 @@ const setTTY = () => {
     rules: {},
   };
 
-  const nextEsLintConfig = require('../../../config/eslint.js');
+  const nextEsLintConfig = require('../../config/eslint.js');
   const nextEsLintConfigWithoutRules = {
     ...nextEsLintConfig,
     rules: {},

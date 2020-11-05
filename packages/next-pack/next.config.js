@@ -1,9 +1,9 @@
 const path = require('path');
 const {
   CLIENT_STATIC_FILES_RUNTIME_POLYFILLS,
-  CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH
+  CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH,
 } = require('next/constants');
-const { userNextConfig } = require('./src/scripts/utils/paths');
+const { userNextConfig } = require('./src/utils/paths');
 
 // Check for insert polyfill
 (() => {
@@ -44,10 +44,8 @@ module.exports = {
 
             // Disable react-refresh
             if (
-              (
-                userNextConfig.nextPack.reactRefresh === false ||
-                process.env.REACT_REFRESH === 'false'
-              ) &&
+              (userNextConfig.nextPack.reactRefresh === false ||
+                process.env.REACT_REFRESH === 'false') &&
               CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH &&
               entries[CLIENT_STATIC_FILES_RUNTIME_REACT_REFRESH]
             )

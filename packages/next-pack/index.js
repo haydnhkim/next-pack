@@ -1,4 +1,4 @@
-const bootstrap = require('./src/scripts/utils/bootstrap');
+const bootstrap = require('./src/utils/bootstrap');
 const next = require('next');
 
 module.exports = (options) => {

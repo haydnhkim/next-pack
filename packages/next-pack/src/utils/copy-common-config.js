@@ -14,9 +14,10 @@ const targetDir = workspaceRoot || projectDir;
     '.importsortrc.js',
     '.prettierrc.js',
   ]
-    .filter(file => {
-      const isJsConfigFile = ['rc.js', 'config.js']
-        .some(end => file.endsWith(end));
+    .filter((file) => {
+      const isJsConfigFile = ['rc.js', 'config.js'].some((end) =>
+        file.endsWith(end)
+      );
       const userFilePath = path.resolve(targetDir, file);
       const isExistsFile = fs.existsSync(userFilePath);
       let isCopyTarget = false;
@@ -34,7 +35,7 @@ const targetDir = workspaceRoot || projectDir;
 
       return isCopyTarget;
     })
-    .map(file => path.resolve(packageDir, file));
+    .map((file) => path.resolve(packageDir, file));
 
   if (targetFiles.length === 0) return;
 
