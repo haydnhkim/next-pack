@@ -14,7 +14,7 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
-    "babel-eslint": "10.1.0",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "bthreads": "^0.5.1",
     "chokidar": "^3.4.3",
