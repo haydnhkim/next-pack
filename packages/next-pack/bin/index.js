@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const bootstrap = require('../src/utils/bootstrap');
 
 // Find execute command
 const args = process.argv.slice(2);
@@ -8,7 +7,12 @@ const scriptIndex = args.findIndex((x) =>
 );
 const command = scriptIndex === -1 ? args[0] || 'dev' : args[scriptIndex];
 
+const defaultEnv = command === 'dev' ? 'development' : 'production';
+process.env.NODE_ENV = process.env.NODE_ENV || defaultEnv;
+
 // Extending next-pack's next.config.js to bootstrap
+// Call after setting NODE_ENV
+const bootstrap = require('../src/utils/bootstrap');
 bootstrap(command);
 
 // Run original next command
