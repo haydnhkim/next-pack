@@ -16,6 +16,8 @@ const bootstrap = (command) => {
     // override next.config in memory
     require.cache[require.resolve(userNextConfigPath)].exports = nextConfig;
   } catch (err) {
+    require('./copy-root');
+
     console.info(`[\x1b[34m info \x1b[0m] created a \x1b[36mnext.config.js\x1b[0m and default configuration files for you.
 Please \x1b[35mrun it again\x1b[0m.`);
     process.exit();
