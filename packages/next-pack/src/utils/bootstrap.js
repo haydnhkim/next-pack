@@ -1,9 +1,14 @@
-const dev = process.env.NODE_ENV === 'development';
-const { userNextConfigPath } = require('./paths');
-const nextConfig = require('../../next.config');
-
 const bootstrap = (command) => {
-  if (dev && command === 'dev') {
+  const dev =
+    command === 'dev' ||
+    !process.env.NODE_ENV ||
+    process.env.NODE_ENV === 'development';
+  if (!process.env.NODE_ENV && dev) process.env.NODE_ENV = 'development';
+
+  const { userNextConfigPath } = require('./paths');
+  const nextConfig = require('../../next.config');
+
+  if (dev) {
     // for dev mode
     require('./run-eslint-activate');
     require('./copy-root');
