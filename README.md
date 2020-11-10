@@ -1,5 +1,14 @@
 # Next Pack
 
+<p align="center">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/@repacks/next-pack">
+    <img alt="" src="https://img.shields.io/npm/v/@repacks/next-pack.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <a aria-label="License" href="https://github.com/haydnhkim/next-pack/blob/master/LICENSE">
+    <img alt="" src="https://img.shields.io/npm/l/@repacks/next-pack.svg?style=for-the-badge&labelColor=000000">
+  </a>
+</p>
+
 Managed configuration for Next.js project.
 
 Developing production-level projects requires a variety of tools and settings.  
@@ -26,7 +35,7 @@ or
 yarn add next react react-dom
 ```
 
-`⚠️ caution`: For new projects, run `git init` first.  
+⚠️ **caution**: For new projects, run `git init` first.  
 Since we use git hooks, the `.git` folder must exist.
 
 #### Next Pack Setup

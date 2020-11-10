@@ -2,7 +2,7 @@ const bootstrap = require('./src/utils/bootstrap');
 const next = require('next');
 
 module.exports = (options) => {
-  const command = process.env.NODE_ENV === 'development' ? 'dev' : 'start';
+  const command = options.dev ? 'dev' : 'start';
 
   bootstrap(command);
 

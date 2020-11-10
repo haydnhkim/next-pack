@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
-    "dev-server": "NODE_ENV=development yarn workspace @repacks/next-app server",
+    "dev-server": "node utils/prerelease.js && NODE_ENV=development yarn workspace @repacks/next-app server",
     "dev-ie": "REACT_REFRESH=false yarn dev",
     "test": "node utils/prerelease.js && npm-run-all --parallel test:*",
     "test:server": "yarn dev-server",

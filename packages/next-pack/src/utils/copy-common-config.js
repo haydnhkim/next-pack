@@ -6,7 +6,7 @@ const targetDir = workspaceRoot || projectDir;
 
 // Copy specific configuration files to the project root
 (() => {
-  const packageDir = path.resolve(__dirname, '../../');
+  const packageDir = path.resolve(__dirname, '..', '..');
   const targetFiles = [
     '.editorconfig',
     '.gitattributes',

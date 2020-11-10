@@ -7,7 +7,7 @@ const targetDir = workspaceRoot || projectDir;
 // Copy files in root folder to project root
 // Currently only move next.config.js
 (() => {
-  const rootDir = path.resolve(__dirname, '../root');
+  const rootDir = path.resolve(__dirname, '..', 'root');
 
   const rootFiles = [];
   shell.ls('-A', rootDir).forEach((file) => {
