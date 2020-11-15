@@ -28,13 +28,13 @@
     "yarn": ">=1.22.4 <2.0.0"
   },
   "scripts": {
+    "start": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
     "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
     "dev-server": "node utils/prerelease.js && yarn workspace @repacks/next-app server",
     "dev-ie": "REACT_REFRESH=false yarn dev",
     "test": "node utils/prerelease.js && npm-run-all --parallel test:*",
-    "test:server": "yarn dev-server",
-    "test:jest": "NODE_ENV=test jest",
-    "test-prod-setting": "yarn workspace @repacks/next-app build && NODE_ENV=production yarn workspace @repacks/next-app server",
+    "test:server": "yarn start",
+    "test:jest": "NODE_ENV=test jest --detectOpenHandles",
     "release": "yarn workspace @repacks/next-pack release",
     "teardown": "node utils/teardown.js"
   },
