@@ -3,25 +3,16 @@ const path = require('path');
 const threads = require('bthreads');
 const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
 
-const setTTY = () => {
-  if (threads.workerData.isTTY) {
-    for (const stream of ['stdout', 'stdin', 'stderr']) {
-      if (process[stream].isTTY === undefined) {
-        process[stream].isTTY = true;
-      }
-    }
-  }
-};
-
 (() => {
   if (threads.isMainThread) return;
 
-  // setTTY is required to run before eslint is imported
-  setTTY();
+  // forces the enabling of colorized eslint output
+  // required to run before eslint is imported
+  process.argv.push('--color');
 
   const chokidar = require('chokidar');
   const { dequal } = require('dequal');
-  const { CLIEngine } = require('eslint');
+  const { ESLint } = require('eslint');
 
   const { files } = userNextConfig.nextPack.eslint || {};
   const targetDir = workspaceRoot || projectDir;
@@ -73,7 +64,7 @@ const setTTY = () => {
         `${path.resolve(dir, '**/*.tsx')}`,
       ])
       .reduce((a, b) => a.concat(b), []);
-  const cli = new CLIEngine({
+  const eslint = new ESLint({
     baseConfig,
     resolvePluginsRelativeTo: __dirname,
     errorOnUnmatchedPattern: false,
@@ -82,16 +73,15 @@ const setTTY = () => {
   // eslint execution function
   const errors = new Map();
   let lastLintRunTime;
-  const lint = (path) => {
+
+  const lint = async (path) => {
     // Return if rerun within 0.3 seconds
     if (Date.now() < lastLintRunTime + 300) return;
 
     lastLintRunTime = Date.now();
-    let report;
-    let formatter = () => {};
+    let results;
     try {
-      report = cli.executeOnFiles(path || eslintUserDirs);
-      formatter = cli.getFormatter();
+      results = await eslint.lintFiles(path || eslintUserDirs);
     } catch (err) {
       if (hasCustomConfig) console.error(err);
       return;
@@ -100,7 +90,7 @@ const setTTY = () => {
     // Check if the problem is resolved
     const resolvedFilePaths = new Set();
     let isPrintedError = false;
-    for (let res of report.results) {
+    for (let res of results) {
       const { messages, filePath } = res;
       const ruleIdValue = messages.map((n) => n.ruleId || 0).join('');
 
@@ -128,20 +118,24 @@ ${colors.green}✔︎ problem resolved!${colors.reset}
 
     // Do not output if there is no message
     if (
-      report.results.map((n) => n.messages).reduce((a, b) => a.concat(b), [])
+      results.map((n) => n.messages).reduce((a, b) => a.concat(b), [])
         .length === 0
     )
       return;
 
-    const message = formatter(report.results);
-
-    // ignore same messages
+    // ignore same error message
     if (isPrintedError) return;
 
-    threads.parentPort.postMessage(message);
+    const formatter = await eslint.loadFormatter('stylish');
+    const resultText = formatter.format(results);
+
+    threads.parentPort.postMessage(resultText);
   };
+
   setTimeout(() => {
-    lint();
+    lint()
+      .then(() => {})
+      .catch(() => {});
   }, 100);
 
   const watcher = chokidar.watch(userDirs, {
@@ -149,5 +143,9 @@ ${colors.green}✔︎ problem resolved!${colors.reset}
     persistent: true,
   });
 
-  watcher.on('change', lint);
+  watcher.on('change', () => {
+    lint()
+      .then(() => {})
+      .catch(() => {});
+  });
 })();
