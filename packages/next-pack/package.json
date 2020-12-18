@@ -17,6 +17,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "bthreads": "^0.5.1",
+    "chalk": "^4.1.0",
     "chokidar": "^3.4.3",
     "classlist-polyfill": "^1.2.0",
     "cross-spawn": "^7.0.3",

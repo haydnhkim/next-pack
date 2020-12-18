@@ -7,10 +7,11 @@ const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
   if (threads.isMainThread) return;
 
   // forces the enabling of colorized eslint output
-  // required to run before eslint is imported
+  // required to execute before eslint and chalk are imported
   process.argv.push('--color');
 
   const chokidar = require('chokidar');
+  const chalk = require('chalk');
   const { dequal } = require('dequal');
   const { ESLint } = require('eslint');
 
@@ -104,15 +105,10 @@ const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
     }
 
     // Print problem resolved message
-    const colors = {
-      reset: '\x1b[0m',
-      underline: '\x1b[4m',
-      green: '\x1b[32m',
-    };
     for (let path of resolvedFilePaths.keys()) {
       threads.parentPort.postMessage(`
-${colors.underline}${path}${colors.reset}
-${colors.green}✔︎ problem resolved!${colors.reset}
+${chalk.underline(path)}
+${chalk.green('✔︎ problem resolved!')}
 `);
     }
 
@@ -130,6 +126,8 @@ ${colors.green}✔︎ problem resolved!${colors.reset}
     const resultText = formatter.format(results);
 
     threads.parentPort.postMessage(resultText);
+
+    return resultText;
   };
 
   setTimeout(() => {
@@ -146,6 +144,20 @@ ${colors.green}✔︎ problem resolved!${colors.reset}
   watcher.on('change', () => {
     lint()
       .then(() => {})
+      .catch(() => {});
+  });
+
+  threads.parentPort.on('message', (message) => {
+    if (message !== 'restart') return;
+
+    errors.clear();
+    lint()
+      .then((resultText) => {
+        if (resultText) return;
+        threads.parentPort.postMessage(
+          chalk.green('✔︎ eslint finished without any errors!')
+        );
+      })
       .catch(() => {});
   });
 })();

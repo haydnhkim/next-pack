@@ -93,6 +93,7 @@ module.exports = {
     eslint: {
       disable: false,
       files: [],
+      restartable: 'rs',
     },
   },
 };
@@ -113,6 +114,10 @@ If not set, the project's root folder is the workspace's root folder.
   turn on/off eslint execution.
 - `eslint.files` {Array<string>} (optional): default `['src', 'pages', 'components', 'server']`  
   Configuration by using the [glob pattern](https://eslint.org/docs/user-guide/configuring#configuration-based-on-glob-patterns) for the files being watched.
+- `eslint.restartable` {string|Boolean} (optional): default `rs`  
+  next-pack does not display duplicate eslint errors in the same file even if the file is changed.  
+  Whilst fixing eslint errors, if you need to print out the entire eslint error, instead of stopping and restart next-pack, you can type `rs` with a carriage return, and eslint will restart your process.  
+  (inspired by nodemon)
 
 ## Features
 

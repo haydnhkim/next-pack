@@ -12,9 +12,14 @@ let userNextConfig = {};
 if (fs.existsSync(userNextConfigPath)) {
   userNextConfig = require(userNextConfigPath);
 }
-userNextConfig.nextPack = userNextConfig.nextPack || {
-  eslint: {},
+const userNextPackConfig = userNextConfig.nextPack || {};
+userNextConfig.nextPack = {
   reactRefresh: true,
+  ...userNextPackConfig,
+  eslint: {
+    restartable: 'rs',
+    ...userNextPackConfig.eslint,
+  },
 };
 const { workspaceRoot } = userNextConfig.nextPack;
 
