@@ -25,45 +25,35 @@ test(
       let html = await res.text();
       html = html.replace(/<\/script>/g, '</script>\n');
 
+      // In webpack 5, chunks are created separately even though set entry point name.
+      const chunksSrcMatches = html.matchAll(
+        /src="(\/_next\/static\/chunks.+js)"/gm
+      );
+      const chunksSrcList = [];
+      for (let [, src] of chunksSrcMatches) {
+        chunksSrcList.push(src);
+      }
+
+      const srcTexts = await Promise.all(
+        chunksSrcList.map((src) =>
+          fetch(`http://localhost:3000${src}`, { headers }).then((res) =>
+            res.text()
+          )
+        )
+      );
+      const jsText = srcTexts.join('\n');
+
       // polyfills-nomodule
-      const polyfillJsSrc = /src="(.+polyfill.+js)"/g.exec(html);
+      expect(jsText.includes('classList')).toBeTruthy();
+      expect(jsText.includes('html5')).toBeTruthy();
+      expect(jsText.includes('window.location.origin')).toBeTruthy();
+
       // polyfills-module
-      const mainJsSrc = /src="(.+main.+js)"/g.exec(html);
-
-      if (!polyfillJsSrc || !mainJsSrc) return;
-
-      let polyfillJsRes;
-      try {
-        polyfillJsRes = await fetch(
-          `http://localhost:3000${polyfillJsSrc[1]}`,
-          {
-            headers,
-          }
-        );
-      } catch (err) {
-        return;
-      }
-      let polyfillJs = await polyfillJsRes.text();
-
-      expect(polyfillJs.includes('classList')).toBeTruthy();
-      expect(polyfillJs.includes('html5')).toBeTruthy();
-      expect(polyfillJs.includes('window.location.origin')).toBeTruthy();
-
-      let mainJsRes;
-      try {
-        mainJsRes = await fetch(`http://localhost:3000${mainJsSrc[1]}`, {
-          headers,
-        });
-      } catch (err) {
-        return;
-      }
-      let mainJs = await mainJsRes.text();
-
-      expect(mainJs.includes('IntersectionObserver')).toBeTruthy();
-      expect(mainJs.includes('matchMedia')).toBeTruthy();
-      expect(mainJs.includes('proxy')).toBeTruthy();
-      expect(mainJs.includes('requestAnimationFrame')).toBeTruthy();
-      expect(mainJs.includes('next-head-count')).toBeTruthy();
+      expect(jsText.includes('IntersectionObserver')).toBeTruthy();
+      expect(jsText.includes('matchMedia')).toBeTruthy();
+      expect(jsText.includes('proxy')).toBeTruthy();
+      expect(jsText.includes('requestAnimationFrame')).toBeTruthy();
+      expect(jsText.includes('next-head-count')).toBeTruthy();
 
       clearInterval(intervalId);
       done();
