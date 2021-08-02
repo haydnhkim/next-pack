@@ -1,28 +1,32 @@
-const { createServer } = require('http');
+// override cwd
+const path = require('path');
+process.chdir(path.resolve(__dirname, '..', '..'));
+
 const next = require('@repacks/next-pack');
 const express = require('express');
 
 const PORT = process.env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+const dev = process.env.NODE_ENV === 'development';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
-const app = express();
+module.exports = nextApp.prepare().then(() => {
+  return new Promise((resolve) => {
+    const app = express();
 
-// for test
-app.get('/close', (req, res) => {
-  res.send('close');
-  appServer.close();
-  process.exit();
-});
+    // for test
+    app.get('/close', (req, res) => {
+      res.send('close');
+      app.close();
+      process.exit();
+    });
 
-app.get('*', handle);
+    app.get('*', handle);
 
-const appServer = createServer(app);
-
-nextApp.prepare().then(() => {
-  appServer.listen(PORT, err => {
-    if (err) throw err;
-    console.log(`⚛️  Ready on http://localhost:${PORT}`);
+    app.listen(PORT, (err) => {
+      if (err) throw err;
+      console.log(`⚛️  Ready on http://localhost:${PORT}`);
+      resolve();
+    });
   });
 });

@@ -8,15 +8,19 @@ const headers = {
     'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 3.5.30729; iftNxParam=1.0.1)',
 };
 
+beforeAll(async () => {
+  await require('../dev/next-app/src/server');
+});
+
 // Next.js has logic to remove duplicate modules
 // so it is necessary to check whether all modules exist.
 test(
   'should be inserted a polyfill',
   (done) => {
-    const intervalId = setInterval(async () => {
+    (async () => {
       let res;
       try {
-        res = await fetch(`http://localhost:3000`, {
+        res = await fetch(`http://0.0.0.0:3000`, {
           headers,
         });
       } catch (err) {
@@ -36,7 +40,7 @@ test(
 
       const srcTexts = await Promise.all(
         chunksSrcList.map((src) =>
-          fetch(`http://localhost:3000${src}`, { headers }).then((res) =>
+          fetch(`http://0.0.0.0:3000${src}`, { headers }).then((res) =>
             res.text()
           )
         )
@@ -55,13 +59,12 @@ test(
       expect(jsText.includes('requestAnimationFrame')).toBeTruthy();
       expect(jsText.includes('next-head-count')).toBeTruthy();
 
-      clearInterval(intervalId);
       done();
-    }, 500);
+    })();
   },
   30 * 1000
 );
 
 afterAll(async () => {
-  await fetch('http://localhost:3000/close');
+  await fetch('http://0.0.0.0:3000/close');
 });

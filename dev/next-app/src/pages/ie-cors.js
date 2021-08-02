@@ -11,12 +11,12 @@ const Page = () => {
 
     setOutputText(loadingText);
     fetch(url)
-      .then(function(response) {
+      .then(function (response) {
         console.log('Header:', response.headers.get('Content-Type'));
         console.log('Response:', response);
         return response.json();
       })
-      .then(function(json) {
+      .then(function (json) {
         const messages = [
           `🌏 URL: ${url}`,
           `🕗 Time: ${new Date().toISOString()}`,
@@ -25,7 +25,7 @@ const Page = () => {
         setOutputText(messages.join('\n'));
         console.log('Got json:', json);
       })
-      .catch(error => {
+      .catch((error) => {
         setOutputText(`💔 Fetch error: ${error.message}`);
         console.error('Failed:', error);
       });
@@ -33,6 +33,7 @@ const Page = () => {
 
   return (
     <div>
+      {/* eslint-disable-next-line @next/next/no-css-tags */}
       <link
         rel="stylesheet"
         href="//nuintun.github.io/fetch/examples/index.css"
@@ -47,7 +48,8 @@ const Page = () => {
         <pre id="output">{outputText}</pre>
       </div>
       example layout using by{' '}
-      <a href="https://github.com/nuintun/fetch">@nuintun/fetch</a>'s example
+      <a href="https://github.com/nuintun/fetch">@nuintun/fetch</a>&apos;s
+      example
     </div>
   );
 };
