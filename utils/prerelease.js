@@ -8,6 +8,14 @@ const nextPackFiles = require('./next-pack-files');
 const workspaceRootDir = path.resolve(__dirname, '../');
 const nextPackDir = path.resolve(__dirname, '../packages/next-pack');
 
+const checkHasConfig = (packageName) => {
+  try {
+    require.resolve(packageName);
+    return true;
+  } catch {}
+  return false;
+};
+
 // copy workspace root files in packages/next-pack
 const copyWorkspaceRootFiles = () => {
   const copyTargetFiles = [];
@@ -60,10 +68,18 @@ const createEsLintConfig = () => {
       ],
     },
   };
+  const newConfigJson = JSON.stringify(config, null, 2);
+
+  const configPath = '../packages/next-pack/config/eslint';
+  const hasConfig = checkHasConfig(configPath);
+  if (hasConfig) {
+    const originConfig = require(configPath);
+    if (newConfigJson === JSON.stringify(originConfig, null, 2)) return;
+  }
 
   fs.writeFileSync(
     path.resolve(nextPackDir, 'config', 'eslint.js'),
-    `module.exports = ${JSON.stringify(config, null, 2)};`
+    `module.exports = ${newConfigJson};`
   );
 };
 createEsLintConfig();
