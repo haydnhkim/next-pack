@@ -130,10 +130,55 @@ When running next-pack, the local development and production environment does th
   - .eslintrc.js
   - .gitattributes
   - .prettierrc.js
-  - .importsortrc.js
 - .gitignore settings updated with `next-pack` version  
   Custom settings can be added
-- Run import-sort and prettier when git commit via husky, lint-stated
+- Run prettier when git commit via husky, lint-stated (required manully install)
+
+### Using eslint
+
+If you want to use eslint, install `eslint-config-next` and configure it as follows.
+
+```sh
+yarn add --dev eslint eslint-config-next
+```
+
+.eslintrc.js
+
+```js
+const config = require('@repacks/next-pack/config/eslint');
+
+module.exports = {
+  ...config,
+  extends: ['next'],
+  rules: {
+    ...config.rules,
+    // add custom rules
+  },
+};
+```
+
+### Using prettier and sort imports
+
+If you want to use prettier, install the following packages.
+
+```sh
+yarn add --dev prettier lint-staged
+```
+
+The import sort setting is automatically added if you use the `@trivago/prettier-plugin-sort-imports` package, which is a prettier plugin.
+
+```sh
+yarn add --dev @trivago/prettier-plugin-sort-imports
+```
+
+After installing referring to [Husky install](https://typicode.github.io/husky/#/?id=automatic-recommended), set as follows in `.husky/pre-commit`.
+
+```sh
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx lint-staged
+```
 
 ## How it Works
 

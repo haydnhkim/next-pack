@@ -9,19 +9,18 @@
     "dev/*"
   ],
   "dependencies": {
-    "husky": "^4.3.6",
-    "import-sort-cli": "^6.0.0",
-    "import-sort-style-module": "^6.0.0",
-    "lint-staged": "^11.1.1",
-    "prettier": "^2.3.2"
+    "eslint-config-react-app": "^6.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
     "jest": "^27.0.6",
     "lerna": "^4.0.0",
+    "lint-staged": "^11.1.1",
     "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
-    "shelljs": "^0.8.4"
+    "prettier": "^2.3.2",
+    "shelljs": "^0.8.4",
+    "husky": "^7.0.0"
   },
   "engines": {
     "node": ">=14.0.0",
@@ -37,20 +36,13 @@
     "test": "node utils/prerelease.js && npm-run-all --sequential test:*",
     "test:server": "yarn start:build",
     "test:jest": "NODE_ENV=test jest --detectOpenHandles",
+    "format": "prettier --write 'packages/**/src/**/*.js' 'dev/**/src/**/*.js'",
     "release": "yarn workspace @repacks/next-pack release",
-    "teardown": "node utils/teardown.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn teardown && npx lint-staged"
-    }
+    "teardown": "node utils/teardown.js",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,ts}": [
-      "import-sort --write",
-      "prettier --write"
-    ],
-    "*.{md,css,html}": [
+    "*.{js,jsx,ts,tsx,md,html,css}": [
       "prettier --write"
     ]
   }

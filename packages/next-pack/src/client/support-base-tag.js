@@ -1,5 +1,5 @@
 // for web cache of search engine using base tag
-(function() {
+(function () {
   if (typeof window === 'undefined') return;
 
   var baseHref = (document.getElementsByTagName('base')[0] || {}).href || '';
@@ -13,6 +13,6 @@
     meta.name = 'next-head-count';
     meta.content = '0';
     document.getElementsByTagName('head')[0].appendChild(meta);
-    window.history.replaceState = function() {};
+    window.history.replaceState = function () {};
   }
 })();

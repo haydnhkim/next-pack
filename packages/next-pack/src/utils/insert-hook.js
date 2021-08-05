@@ -8,7 +8,10 @@ const userPackageJson = require(userPackageJsonPath);
 // Add husky, lint-staged configuration to project package.json
 (() => {
   // Do not add if already added or for @repacks/next-app
-  if (userPackageJson.husky || userPackageJson.name === '@repacks/next-app')
+  if (
+    userPackageJson['lint-staged'] ||
+    userPackageJson.name === '@repacks/next-app'
+  )
     return;
 
   const hookConfig = {
@@ -18,8 +21,7 @@ const userPackageJson = require(userPackageJsonPath);
       },
     },
     'lint-staged': {
-      '*.{js,ts,tsx}': ['import-sort --write', 'prettier --write'],
-      '*.{md,css,html}': ['prettier --write'],
+      '*.{js,jsx,ts,tsx,md,html,css}': ['prettier --write'],
     },
   };
   const hookConfigKeys = Object.keys(hookConfig);

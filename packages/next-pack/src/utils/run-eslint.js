@@ -3,6 +3,21 @@ const path = require('path');
 const threads = require('bthreads');
 const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
 
+const checkHasPackage = (packageName) => {
+  try {
+    require.resolve(packageName);
+    return true;
+  } catch {}
+  return false;
+};
+
+const checkHasEslintRule = ({ targetDir }) => {
+  const hasPackage = checkHasPackage(`${targetDir}/.eslintrc`);
+  if (!hasPackage) return false;
+  const eslintConfig = require(`${targetDir}/.eslintrc`);
+  return (eslintConfig.extends || []).includes('next', 'eslint-config-next');
+};
+
 (() => {
   if (threads.isMainThread) return;
 
@@ -13,10 +28,15 @@ const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
   const chokidar = require('chokidar');
   const chalk = require('chalk');
   const { dequal } = require('dequal');
-  const { ESLint } = require('eslint');
 
-  const { files } = userNextConfig.nextPack.eslint || {};
   const targetDir = workspaceRoot || projectDir;
+  const isRunningEsLint =
+    checkHasPackage('eslint') && checkHasEslintRule({ targetDir });
+  threads.parentPort.postMessage({ type: 'init', isRunningEsLint });
+  if (!isRunningEsLint) return;
+
+  const { ESLint } = require('eslint');
+  const { files } = userNextConfig.nextPack.eslint || {};
 
   const userDirs = files
     ? [...new Set(files)]

@@ -11,7 +11,8 @@ const gitIgnorePath = path.resolve(
   '..',
   'config/gitignore.txt'
 );
-const sharedGitIgnoreRegExp = /# Created by https:\/\/www.gitignore.io.+[^]+# End of next-pack/;
+const sharedGitIgnoreRegExp =
+  /# Created by https:\/\/www.gitignore.io.+[^]+# End of next-pack/;
 
 (() => {
   const hasUserGitIgnore = fs.existsSync(userGitIgnorePath);

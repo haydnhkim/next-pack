@@ -16,7 +16,17 @@ const { userNextConfig } = require('./paths');
       { workerData: { isTTY: process.stdout.isTTY } }
     );
 
-    worker.on('message', console.log);
+    worker.on('message', (e) => {
+      if (e.type === 'init') {
+        return (
+          e.isRunningEsLint &&
+          console.info(
+            chalk.yellow(`eslint restart at any time, enter \`${restartable}\``)
+          )
+        );
+      }
+      console.log(e);
+    });
     worker.on('error', console.error);
     worker.on('exit', (code) => {
       if (code !== 0) console.error(`Worker stopped with exit code ${code}`);
@@ -38,9 +48,5 @@ const { userNextConfig } = require('./paths');
         console.clear();
       }
     });
-
-    console.info(
-      chalk.yellow(`eslint restart at any time, enter \`${restartable}\``)
-    );
   }
 })();
