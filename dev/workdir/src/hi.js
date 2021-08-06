@@ -1,7 +1,6 @@
 import React from 'react';
 
 const asdasdas = 112321;
-const asdasdas = 112321;
 
 const Page = () => (
   <div>

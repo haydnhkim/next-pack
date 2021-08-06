@@ -27,5 +27,6 @@ module.exports = {
       '^[./]',
     ],
     importOrderSeparation: false,
+    experimentalBabelParserPluginsList: ['jsx', 'typescript'],
   }),
 };
