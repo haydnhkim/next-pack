@@ -3,4 +3,5 @@
 
 yarn teardown && \
 node utils/create-eslint-config.js && \
+git add packages/next-pack/config/eslint.js && \
 npx lint-staged

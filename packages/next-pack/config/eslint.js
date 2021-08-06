@@ -272,5 +272,6 @@ module.exports = {
     'jsx-a11y/scope': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react/react-in-jsx-scope': 'off',
+    'react/no-unescaped-entities': 'off',
   },
 };
