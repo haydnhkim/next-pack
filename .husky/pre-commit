@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn teardown && npx lint-staged
+yarn teardown && \
+node utils/create-eslint-config.js && \
+npx lint-staged
