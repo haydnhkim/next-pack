@@ -12,8 +12,7 @@
 Managed configuration for Next.js project.
 
 Developing production-level projects requires a variety of tools and settings.  
-For example, eslint, prettier, .gitignore, polyfill and etc,.  
-But, You don't need to set up tools for your development environment.
+For example, eslint, prettier, .gitignore, polyfill and etc,.
 
 Next Pack is a package created to centralize and manage additional parts when creating or maintaining Next.js based project.
 
