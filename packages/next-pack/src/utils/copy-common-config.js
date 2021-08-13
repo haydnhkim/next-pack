@@ -11,7 +11,6 @@ const targetDir = workspaceRoot || projectDir;
     '.editorconfig',
     '.gitattributes',
     '.eslintrc.js',
-    '.importsortrc.js',
     '.prettierrc.js',
   ]
     .filter((file) => {
