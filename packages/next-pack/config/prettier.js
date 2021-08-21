@@ -16,6 +16,7 @@ module.exports = {
     importOrder: [
       'react',
       'prop-types',
+      'classnames',
       'next',
       'redux',
       'mobx',
