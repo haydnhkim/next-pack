@@ -14,19 +14,12 @@ module.exports = nextApp.prepare().then(() => {
   return new Promise((resolve) => {
     const app = express();
 
-    // for test
-    app.get('/close', (req, res) => {
-      res.send('close');
-      app.close();
-      process.exit();
-    });
-
     app.get('*', handle);
 
-    app.listen(PORT, (err) => {
+    const server = app.listen(PORT, (err) => {
       if (err) throw err;
       console.log(`⚛️  Ready on http://localhost:${PORT}`);
-      resolve();
+      resolve(server);
     });
   });
 });

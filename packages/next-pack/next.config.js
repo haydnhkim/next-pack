@@ -1,9 +1,14 @@
 const path = require('path');
+const fs = require('fs');
 const {
   CLIENT_STATIC_FILES_RUNTIME_MAIN,
   CLIENT_STATIC_FILES_RUNTIME_POLYFILLS,
+  CLIENT_STATIC_FILES_RUNTIME_POLYFILLS_SYMBOL,
 } = require('next/constants');
-const { userNextConfig } = require('./src/utils/paths');
+const {
+  userNextConfig,
+  nextPackPolyfillNomodulePath,
+} = require('./src/utils/paths');
 
 // Check for insert polyfill
 (() => {
@@ -11,7 +16,10 @@ const { userNextConfig } = require('./src/utils/paths');
 
   if (
     !CLIENT_STATIC_FILES_RUNTIME_MAIN ||
-    !CLIENT_STATIC_FILES_RUNTIME_POLYFILLS
+    !(
+      CLIENT_STATIC_FILES_RUNTIME_POLYFILLS ||
+      CLIENT_STATIC_FILES_RUNTIME_POLYFILLS_SYMBOL
+    )
   ) {
     console.error(
       '[\x1b[31m %s \x1b[0m]',
@@ -57,17 +65,16 @@ module.exports = {
             );
             entries[main] = addFileToEntries(entries, main, polyfillsModule);
 
-            // Add more polyfills for IE9
+            // Add more polyfills for IE9 (for next > v11.1.1)
+            // Code for different versions: packages/next-pack/src/utils/bootstrap.js (for next <= v11.1.1)
             const polyfills = CLIENT_STATIC_FILES_RUNTIME_POLYFILLS;
-            const polyfillsNoModule = path.join(
-              clientPath,
-              'polyfills-nomodule.js'
-            );
-            entries[polyfills] = addFileToEntries(
-              entries,
-              polyfills,
-              polyfillsNoModule
-            );
+            if (polyfills) {
+              entries[polyfills] = addFileToEntries(
+                entries,
+                polyfills,
+                nextPackPolyfillNomodulePath
+              );
+            }
 
             return entries;
           },

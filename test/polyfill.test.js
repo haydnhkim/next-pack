@@ -7,9 +7,10 @@ const headers = {
   'User-Agent':
     'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 3.5.30729; iftNxParam=1.0.1)',
 };
+let server;
 
 beforeAll(async () => {
-  await require('../dev/next-app/src/server');
+  server = await require('../dev/next-app/src/server');
 });
 
 // Next.js has logic to remove duplicate modules
@@ -66,5 +67,5 @@ test(
 );
 
 afterAll(async () => {
-  await fetch('http://0.0.0.0:3000/close');
+  await server.close();
 });

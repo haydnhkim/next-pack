@@ -154,7 +154,7 @@ module.exports = {
     ],
     'no-unreachable': 'warn',
     'no-unused-expressions': [
-      'error',
+      'warn',
       {
         allowShortCircuit: true,
         allowTernary: true,

@@ -9,9 +9,13 @@
     "dev/*"
   ],
   "dependencies": {
-    "eslint-config-react-app": "^6.0.0"
+    "classlist-polyfill": "^1.2.0",
+    "eslint-config-react-app": "^6.0.0",
+    "html5shiv": "^3.7.3"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.49",
+    "@swc/core": "^1.2.84",
     "@trivago/prettier-plugin-sort-imports": "^2.0.2",
     "cross-env": "^7.0.3",
     "husky": "^7.0.0",
@@ -31,7 +35,8 @@
     "start": "npm-run-all --sequential start:*",
     "start:build": "yarn workspace @repacks/next-app build",
     "start:server": "NODE_ENV=production yarn workspace @repacks/next-app server",
-    "dev": "node utils/prerelease.js && yarn workspace @repacks/next-app dev",
+    "dev": "yarn dev:utils && yarn workspace @repacks/next-app dev",
+    "dev:utils": "spack && node utils/create-eslint-config.js && node utils/prerelease.js",
     "dev-server": "node utils/prerelease.js && yarn workspace @repacks/next-app server",
     "dev-ie": "REACT_REFRESH=false yarn dev",
     "test": "node utils/prerelease.js && npm-run-all --sequential test:*",

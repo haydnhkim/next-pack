@@ -15,7 +15,12 @@ const checkHasEslintRule = ({ targetDir }) => {
   const hasPackage = checkHasPackage(`${targetDir}/.eslintrc`);
   if (!hasPackage) return false;
   const eslintConfig = require(`${targetDir}/.eslintrc`);
-  return (eslintConfig.extends || []).includes('next', 'eslint-config-next');
+  const eslintExtends = Array.isArray(eslintConfig.extends)
+    ? eslintConfig.extends
+    : [eslintConfig.extends];
+  const nextLintNames = ['next', 'eslint-config-next'];
+
+  return eslintExtends.some((n) => nextLintNames.includes(n));
 };
 
 (() => {

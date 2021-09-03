@@ -29,6 +29,14 @@ const createEsLintConfig = () => {
     rules: {
       ...baseConfig.rules,
       ...reactAppConfigRules,
+      'no-unused-expressions': [
+        'warn',
+        {
+          allowShortCircuit: true,
+          allowTernary: true,
+          allowTaggedTemplates: true,
+        },
+      ],
       'react/react-in-jsx-scope': 'off',
       'react/no-unescaped-entities': 'off',
       'react/jsx-uses-vars': 'warn',

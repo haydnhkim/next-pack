@@ -15,11 +15,6 @@ const userPackageJson = require(userPackageJsonPath);
     return;
 
   const hookConfig = {
-    husky: {
-      hooks: {
-        'pre-commit': 'npx lint-staged',
-      },
-    },
     'lint-staged': {
       '*.{js,jsx,ts,tsx,md,html,css}': ['prettier --write'],
     },

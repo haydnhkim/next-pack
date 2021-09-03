@@ -16,6 +16,7 @@ const copyWorkspaceRootFiles = () => {
     if (
       nextPackFiles.includes(file) ||
       !['config', '.git', 'rc.js', '.md'].some((n) => file.includes(n)) ||
+      filePath.includes('spack.config.js') ||
       fs.lstatSync(filePath).isDirectory()
     )
       return;

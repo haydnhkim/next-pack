@@ -22,10 +22,14 @@ userNextConfig.nextPack = {
   },
 };
 const { workspaceRoot } = userNextConfig.nextPack;
+const nextPackPolyfillNomodulePath = require.resolve(
+  '../client/polyfills-nomodule'
+);
 
 module.exports = {
   projectDir,
   workspaceRoot,
   userNextConfigPath,
   userNextConfig,
+  nextPackPolyfillNomodulePath,
 };
