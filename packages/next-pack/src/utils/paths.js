@@ -29,7 +29,6 @@ const nextPackPolyfillNomodulePath = require.resolve(
 module.exports = {
   projectDir,
   workspaceRoot,
-  userNextConfigPath,
   userNextConfig,
   nextPackPolyfillNomodulePath,
 };

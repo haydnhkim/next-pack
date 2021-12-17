@@ -123,7 +123,7 @@ If not set, the project's root folder is the workspace's root folder.
 When running next-pack, the local development and production environment does the following:
 
 - Run eslint in watch mode on the terminal
-- extension next.config.js (Automatically add polyfills)
+- Additional polyfills (support IE9)
 - Manage settings by copying configuration files from next-pack, next-pack/root folder to project folder
   - .editorconfig
   - .eslintrc.js
@@ -132,6 +132,22 @@ When running next-pack, the local development and production environment does th
 - .gitignore settings updated with `next-pack` version  
   Custom settings can be added
 - Run prettier when git commit via husky, lint-stated (required manully install)
+
+### Using additional polyfills for IE
+
+If you want to use additional polyfills for IE, load `polyfills-module.js` in `pages/_app.js` as follows.
+
+```js
+import '@repacks/next-pack/src/client/polyfills-module';
+
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+
+export default MyApp;
+```
+
+`polyfills-nomodule.js` file in next.js is automatically expanded.
 
 ### Using eslint
 
@@ -178,18 +194,6 @@ After installing referring to [Husky install](https://typicode.github.io/husky/#
 
 npx lint-staged
 ```
-
-## How it Works
-
-The key part is to extend `next.config.js` and run it.  
-In order to make sure that the user uses all the same parts as when using Next.js, I created the following:
-
-- Read and merge `next-pack` and your `next.config.js`.
-- Use `require.cache` to change the merged configuration to your `next.config.js` in memory.
-
-This allows for the automatic loading of polyfills in separate projects without any configuration.
-
-The `next-pack/index.js` file is implemented simply by calling `next` with the addition of the parts that `next-pack` handles.
 
 ## Contributing
 
