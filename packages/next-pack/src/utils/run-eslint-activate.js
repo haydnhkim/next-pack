@@ -18,12 +18,10 @@ const { userNextConfig } = require('./paths');
 
     worker.on('message', (e) => {
       if (e.type === 'init') {
-        return (
-          e.isRunningEsLint &&
-          console.info(
-            chalk.yellow(`eslint restart at any time, enter \`${restartable}\``)
-          )
+        console.info(
+          chalk.yellow(`eslint restart at any time, enter \`${restartable}\``)
         );
+        return;
       }
       console.log(e);
     });

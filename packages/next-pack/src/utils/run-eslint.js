@@ -23,9 +23,8 @@ const checkHasEslintRule = ({ targetDir }) => {
   return eslintExtends.some((n) => nextLintNames.includes(n));
 };
 
-(() => {
-  if (threads.isMainThread) return;
-
+const run = ({ isUsingCliLintCommand = false } = {}) => {
+  if (!isUsingCliLintCommand && threads.isMainThread) return;
   // forces the enabling of colorized eslint output
   // required to execute before eslint and chalk are imported
   process.argv.push('--color');
@@ -35,19 +34,6 @@ const checkHasEslintRule = ({ targetDir }) => {
   const { dequal } = require('dequal');
 
   const targetDir = workspaceRoot || projectDir;
-  const isRunningEsLint =
-    checkHasPackage('eslint') && checkHasEslintRule({ targetDir });
-  threads.parentPort.postMessage({ type: 'init', isRunningEsLint });
-  if (!isRunningEsLint) return;
-
-  const { ESLint } = require('eslint');
-  const { files } = userNextConfig.nextPack.eslint || {};
-
-  const userDirs = files
-    ? [...new Set(files)]
-    : ['src', 'pages', 'components', 'server']
-        .map((dir) => path.resolve(targetDir, dir))
-        .filter((dir) => fs.existsSync(dir));
   const userConfigFile = [
     '.eslintrc.js',
     '.eslintrc.yaml',
@@ -57,6 +43,35 @@ const checkHasEslintRule = ({ targetDir }) => {
   ]
     .map((file) => path.resolve(targetDir, file))
     .find((file) => fs.existsSync(file));
+
+  // If the eslint setting exists but the extension cannot be supported
+  if (userConfigFile && !userConfigFile.endsWith('.js')) {
+    console.error(
+      `⚠️  Please use the ${chalk.yellow(
+        '`.eslintrc.js`'
+      )}. More info: ${chalk.bold(
+        'https://github.com/haydnhkim/next-pack#using-eslint'
+      )}`
+    );
+  }
+
+  const isRunningEsLint =
+    checkHasPackage('eslint') && checkHasEslintRule({ targetDir });
+  if (!isRunningEsLint) return;
+
+  if (!isUsingCliLintCommand) {
+    threads.parentPort.postMessage({ type: 'init' });
+  }
+
+  const { ESLint } = require('eslint');
+  const { files, exit = [] } = userNextConfig.nextPack.eslint || {};
+
+  const userDirs = files
+    ? [...new Set(files)]
+    : ['src', 'pages', 'components', 'server']
+        .map((dir) => path.resolve(targetDir, dir))
+        .filter((dir) => fs.existsSync(dir));
+
   const userEsLintConfig = userConfigFile && require(userConfigFile);
   const userEsLintConfigRules = (userEsLintConfig || {}).rules || {};
   const userEsLintConfigWithoutRules = userEsLintConfig && {
@@ -129,12 +144,14 @@ const checkHasEslintRule = ({ targetDir }) => {
       }
     }
 
-    // Print problem resolved message
-    for (let path of resolvedFilePaths.keys()) {
-      threads.parentPort.postMessage(`
+    if (!isUsingCliLintCommand) {
+      // Print problem resolved message
+      for (let path of resolvedFilePaths.keys()) {
+        threads.parentPort.postMessage(`
 ${chalk.underline(path)}
 ${chalk.green('✔︎ problem resolved!')}
 `);
+      }
     }
 
     // Do not output if there is no message
@@ -144,13 +161,33 @@ ${chalk.green('✔︎ problem resolved!')}
     )
       return;
 
-    // ignore same error message
+    // Ignore same error message
     if (isPrintedError) return;
 
     const formatter = await eslint.loadFormatter('stylish');
-    const resultText = formatter.format(results);
+    let resultText = formatter.format(results);
+    resultText = resultText.replace(targetDir, '.');
 
-    threads.parentPort.postMessage(resultText);
+    if (isUsingCliLintCommand) {
+      console.info(resultText);
+
+      // Exit when user sets exit rule
+      const nearEnds = resultText.split('\n').slice(-3);
+      if (
+        (exit.includes('warning') &&
+          nearEnds.some((n) => n.includes('warning'))) ||
+        (exit.includes('error') && nearEnds.some((n) => n.includes('error')))
+      ) {
+        console.info(
+          chalk.red(
+            '✖ eslint found some errors. Please fix them and try committing again.'
+          )
+        );
+        process.exitCode = 1;
+      }
+    } else {
+      threads.parentPort.postMessage(resultText);
+    }
 
     return resultText;
   };
@@ -161,28 +198,34 @@ ${chalk.green('✔︎ problem resolved!')}
       .catch(() => {});
   }, 100);
 
-  const watcher = chokidar.watch(userDirs, {
-    ignored: /(^|[/\\])\../,
-    persistent: true,
-  });
+  if (!isUsingCliLintCommand) {
+    const watcher = chokidar.watch(userDirs, {
+      ignored: /(^|[/\\])\../,
+      persistent: true,
+    });
 
-  watcher.on('change', () => {
-    lint()
-      .then(() => {})
-      .catch(() => {});
-  });
+    watcher.on('change', () => {
+      lint()
+        .then(() => {})
+        .catch(() => {});
+    });
 
-  threads.parentPort.on('message', (message) => {
-    if (message !== 'restart') return;
+    threads.parentPort.on('message', (message) => {
+      if (message !== 'restart') return;
 
-    errors.clear();
-    lint()
-      .then((resultText) => {
-        if (resultText) return;
-        threads.parentPort.postMessage(
-          chalk.green('✔︎ eslint finished without any errors!')
-        );
-      })
-      .catch(() => {});
-  });
-})();
+      errors.clear();
+      lint()
+        .then((resultText) => {
+          if (resultText) return;
+          threads.parentPort.postMessage(
+            chalk.green('✔︎ eslint finished without any errors!')
+          );
+        })
+        .catch(() => {});
+    });
+  }
+};
+
+run();
+
+module.exports = run;

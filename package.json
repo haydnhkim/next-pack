@@ -44,6 +44,7 @@
     "dev-ie": "REACT_REFRESH=false yarn dev",
     "build": "rollup --config rollup.config.js && node utils/wrap-polyfills.js && node utils/create-eslint-config.js && node utils/prerelease.js",
     "test": "node utils/prerelease.js && playwright test",
+    "lint": "yarn workspace @repacks/next-app lint",
     "format": "prettier --write 'packages/**/src/**/*.js' 'dev/**/src/**/*.js'",
     "release": "yarn build && yarn workspace @repacks/next-pack release",
     "teardown": "node utils/teardown.js",

@@ -24,6 +24,7 @@
     "start": "next-pack start",
     "dev": "next-pack",
     "build": "next-pack build",
-    "server": "node src/server/index.js"
+    "server": "node src/server/index.js",
+    "lint": "next-pack lint"
   }
 }

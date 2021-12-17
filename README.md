@@ -61,7 +61,8 @@ add a `scripts` to your `package.json` like this:
   "scripts": {
     "start": "next-pack start",
     "dev": "next-pack",
-    "build": "next-pack build"
+    "build": "next-pack build",
+    "lint": "next-pack lint"
   }
 }
 ```
@@ -93,6 +94,7 @@ module.exports = {
       disable: false,
       files: [],
       restartable: 'rs',
+      exit: ['warning', 'errror'],
     },
   },
 };
@@ -117,6 +119,10 @@ If not set, the project's root folder is the workspace's root folder.
   next-pack does not display duplicate eslint errors in the same file even if the file is changed.  
   Whilst fixing eslint errors, if you need to print out the entire eslint error, instead of stopping and restart next-pack, you can type `rs` with a carriage return, and eslint will restart your process.  
   (inspired by nodemon)
+- `eslint.exit` {['warning', 'error']} (optional): default `[]`  
+  This setting is used when using the `next-pack lint` of scripts.  
+  It is used when you want to exit with failure for git hooks.  
+  Write the error level at which you want the failure to occur.
 
 ## Features
 
