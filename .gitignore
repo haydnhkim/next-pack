@@ -526,6 +526,7 @@ $RECYCLE.BIN/
 
 # next-pack development
 packages/next-pack/.*config
+packages/next-pack/*.config.ts
 packages/next-pack/*rc.js
 packages/next-pack/*.md
 packages/next-pack/.git*
@@ -539,3 +540,5 @@ dev/workdir/*.js
 dev/workdir/yarn.lock
 dev/workdir/next-env.d.ts
 dev/workdir/tsconfig.json
+.parcel-cache
+test-results

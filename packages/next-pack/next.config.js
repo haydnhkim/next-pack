@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const {
   CLIENT_STATIC_FILES_RUNTIME_MAIN,
   CLIENT_STATIC_FILES_RUNTIME_POLYFILLS,
@@ -48,7 +47,7 @@ module.exports = {
   ...userNextConfig,
   webpack(config, args) {
     const { isServer } = args;
-
+    console.log({ isServer });
     const newConfig = {
       ...config,
       entry: isServer
@@ -59,6 +58,7 @@ module.exports = {
 
             // Add more polyfills for All browsers
             const main = CLIENT_STATIC_FILES_RUNTIME_MAIN;
+            console.log({ main });
             const polyfillsModule = path.join(
               clientPath,
               'polyfills-module.js'

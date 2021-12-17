@@ -1,3 +1,3 @@
-import 'classlist-polyfill';
-import 'html5shiv';
-import './location-history';
+require('classlist-polyfill');
+require('html5shiv');
+require('./nomodule/location-history');

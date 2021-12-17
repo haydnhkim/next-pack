@@ -10,16 +10,13 @@ const dev = process.env.NODE_ENV === 'development';
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
-module.exports = nextApp.prepare().then(() => {
-  return new Promise((resolve) => {
-    const app = express();
+nextApp.prepare().then(() => {
+  const app = express();
 
-    app.get('*', handle);
+  app.get('*', handle);
 
-    const server = app.listen(PORT, (err) => {
-      if (err) throw err;
-      console.log(`⚛️  Ready on http://localhost:${PORT}`);
-      resolve(server);
-    });
+  app.listen(PORT, (err) => {
+    if (err) throw err;
+    console.log(`⚛️  Ready on http://localhost:${PORT}`);
   });
 });
