@@ -1,0 +1,2 @@
+# Ignore polyfills:
+packages/next-pack/src/client
