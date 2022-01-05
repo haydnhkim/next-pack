@@ -16,18 +16,16 @@
   "devDependencies": {
     "@playwright/test": "^1.17.1",
     "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@rollup/plugin-node-resolve": "^13.1.2",
     "@swc/cli": "^0.1.55",
-    "@swc/core": "^1.2.120",
+    "@swc/core": "^1.2.126",
     "@trivago/prettier-plugin-sort-imports": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint-config-next": "^12.0.7",
     "husky": "^7.0.4",
-    "lint-staged": "^12.1.2",
-    "node-fetch": "^3.1.0",
-    "npm-run-all": "^4.1.5",
+    "lint-staged": "^12.1.5",
     "prettier": "^2.5.1",
-    "rollup": "^2.61.1",
+    "rollup": "^2.63.0",
     "rollup-plugin-terser": "^7.0.2",
     "shelljs": "^0.8.4"
   },
@@ -36,7 +34,7 @@
     "yarn": ">=1.22.4 <2.0.0"
   },
   "scripts": {
-    "start": "npm-run-all --sequential start:*",
+    "start": "yarn start:build && yarn start:server",
     "start:build": "yarn workspace @repacks/next-app build",
     "start:server": "NODE_ENV=production yarn workspace @repacks/next-app server",
     "dev": "yarn build && yarn workspace @repacks/next-app dev",

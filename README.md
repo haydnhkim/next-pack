@@ -139,9 +139,9 @@ When running next-pack, the local development and production environment does th
   Custom settings can be added
 - Run prettier when git commit via husky, lint-stated (required manully install)
 
-### Using additional polyfills for IE
+### Using additional polyfills
 
-If you want to use additional polyfills for IE, load `polyfills-module.js` in `pages/_app.js` as follows.
+If you want to use additional polyfills for modern browsers, load `polyfills-module.js` in `pages/_app.js` as follows.
 
 ```js
 import '@repacks/next-pack/src/client/polyfills-module';
@@ -153,7 +153,32 @@ function MyApp({ Component, pageProps }) {
 export default MyApp;
 ```
 
-`polyfills-nomodule.js` file in next.js is automatically expanded.
+If you want to use additional polyfills for legacy browsers(IE), add `addPolyfillPlugins` in `next.config.js` as follows.
+
+```js
+const {
+  addPolyfillPlugins,
+} = require('@repacks/next-pack/src/plugins/add-polyfills-nomodule');
+
+module.exports = {
+  webpack(config, { dev, isServer }) {
+    return {
+      ...config,
+      plugins: [
+        ...(config.plugins || []),
+        ...addPolyfillPlugins({
+          // filePaths key is optional. If set or not set, it will be added to the `polyfills-nomodule.js` of next-pack.
+          // You can add your custom additional polyfills for legacy browsers.
+          // eg - filePaths: ['./src/client/polyfills-sample.js', 'html5shiv']
+          filePaths: [],
+          dev,
+          isServer,
+        }),
+      ].filter(Boolean),
+    };
+  },
+};
+```
 
 ### Using eslint
 

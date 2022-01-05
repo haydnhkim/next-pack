@@ -5,7 +5,7 @@ const nextPackFiles = require('./next-pack-files');
 const removeGarbageFiles = ({ targetDir, excludes = [] }) => {
   const removeTargetFiles = [];
 
-  shell.ls('-A', targetDir).forEach(file => {
+  shell.ls('-A', targetDir).forEach((file) => {
     if (excludes.includes(file)) return;
 
     removeTargetFiles.push(path.resolve(targetDir, file));
@@ -19,11 +19,11 @@ const removeGarbageFiles = ({ targetDir, excludes = [] }) => {
 // remove generated files in dev/next-app
 removeGarbageFiles({
   targetDir: path.resolve(__dirname, '../dev/next-app'),
-  excludes: ['pages', 'src', 'package.json']
+  excludes: ['pages', 'src', 'next.config.js', 'package.json'],
 });
 
 // remove copied files in packages/next-pack
 removeGarbageFiles({
   targetDir: path.resolve(__dirname, '../packages/next-pack'),
-  excludes: nextPackFiles
+  excludes: nextPackFiles,
 });

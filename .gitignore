@@ -531,7 +531,7 @@ packages/next-pack/*rc.js
 packages/next-pack/*.md
 packages/next-pack/.git*
 dev/next-app/.*
-dev/next-app/*.js
+dev/next-app/*rc.js
 dev/next-app/yarn.lock
 dev/next-app/next-env.d.ts
 dev/next-app/tsconfig.json
