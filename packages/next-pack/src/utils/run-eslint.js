@@ -214,6 +214,9 @@ ${chalk.green('✔︎ problem resolved!')}
       if (message !== 'restart') return;
 
       errors.clear();
+      threads.parentPort.postMessage(
+        `${chalk.cyan('wait')}  - eslint restarting...`
+      );
       lint()
         .then((resultText) => {
           if (resultText) return;
