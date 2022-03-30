@@ -6,19 +6,19 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "express": "^4.17.2",
-    "next": "^12.1.0",
+    "express": "^4.17.3",
+    "next": "^12.1.2",
     "qs": "^6.10.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.10",
-    "@types/react": "^17.0.38",
-    "eslint": "^8.7.0",
-    "eslint-config-next": "^12.0.9",
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "eslint": "^8.12.0",
+    "eslint-config-next": "^12.1.2",
     "rimraf": "^3.0.2",
-    "typescript": "^4.5.4"
+    "typescript": "^4.6.3"
   },
   "scripts": {
     "start": "next-pack start",
