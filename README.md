@@ -34,8 +34,9 @@ or
 yarn add next react react-dom
 ```
 
-⚠️ **caution**: For new projects, run `git init` first.  
-Since we use git hooks, the `.git` folder must exist.
+> **Warning**:
+> For new projects, run `git init` first.  
+> Since we use git hooks, the `.git` folder must exist.
 
 #### Next Pack Setup
 
