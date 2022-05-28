@@ -1,4 +1,7 @@
-if (!process.env.NODE_ENV) process.env.NODE_ENV = 'development';
+if (!process.env.NODE_ENV) {
+  // @ts-ignore
+  process.env.NODE_ENV = 'development';
+}
 const dev = process.env.NODE_ENV === 'development';
 
 const bootstrap = (command) => {

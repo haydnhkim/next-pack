@@ -1,20 +1,22 @@
-const path = require('path');
-const fs = require('fs');
-const baseConfig = require('eslint-config-react-app/base');
-const eslintConfigReactApp = require('eslint-config-react-app');
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+import eslintConfigReactApp from 'eslint-config-react-app';
+import baseConfig from 'eslint-config-react-app/base.js';
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const nextPackDir = path.resolve(__dirname, '../packages/next-pack');
 
-const checkHasConfig = (packageName) => {
+const checkHasConfig = async (packageName) => {
   try {
-    require.resolve(packageName);
+    await import(packageName);
     return true;
   } catch {}
   return false;
 };
 
 // create eslint config files in packages/next-pack/config
-const createEsLintConfig = () => {
+const createEsLintConfig = async () => {
   const reactAppConfigRules = {};
   for (let [key, value] of Object.entries(eslintConfigReactApp.rules)) {
     if (key.startsWith('flowtype')) continue;
@@ -53,10 +55,10 @@ const createEsLintConfig = () => {
   };
   const newConfigJson = JSON.stringify(config, null, 2);
 
-  const configPath = '../packages/next-pack/config/eslint';
-  const hasConfig = checkHasConfig(configPath);
+  const configPath = '../packages/next-pack/config/eslint.js';
+  const hasConfig = await checkHasConfig(configPath);
   if (hasConfig) {
-    const originConfig = require(configPath);
+    const { default: originConfig } = await import(configPath);
     if (newConfigJson === JSON.stringify(originConfig, null, 2)) return;
   }
 
@@ -65,4 +67,4 @@ const createEsLintConfig = () => {
     `module.exports = ${newConfigJson};`
   );
 };
-createEsLintConfig();
+createEsLintConfig().then(() => {});

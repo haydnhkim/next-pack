@@ -1,6 +1,9 @@
-const path = require('path');
-const shell = require('shelljs');
-const nextPackFiles = require('./next-pack-files');
+import path from 'path';
+import shell from 'shelljs';
+import url from 'url';
+import nextPackFiles from './next-pack-files.js';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const removeGarbageFiles = ({ targetDir, excludes = [] }) => {
   const removeTargetFiles = [];
@@ -16,10 +19,15 @@ const removeGarbageFiles = ({ targetDir, excludes = [] }) => {
   shell.rm('-rf', removeTargetFiles);
 };
 
-// remove generated files in dev/next-app
+// remove generated files in dev apps
+const devAppExcludes = ['pages', 'src', 'next.config.js', 'package.json'];
 removeGarbageFiles({
   targetDir: path.resolve(__dirname, '../dev/next-app'),
-  excludes: ['pages', 'src', 'next.config.js', 'package.json'],
+  excludes: devAppExcludes,
+});
+removeGarbageFiles({
+  targetDir: path.resolve(__dirname, '../dev/next-app-esm'),
+  excludes: devAppExcludes,
 });
 
 // remove copied files in packages/next-pack

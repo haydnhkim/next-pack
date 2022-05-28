@@ -4,43 +4,48 @@
   "repository": "git@github.com:haydnhkim/next-pack.git",
   "author": "Haydn Hyundong Kim <haydnhkim@gmail.com>",
   "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=16.0.0 <17.0.0",
+    "yarn": ">=3.2 <4"
+  },
+  "packageManager": "yarn@3.2.1",
   "workspaces": [
     "packages/*",
     "dev/*"
   ],
   "dependencies": {
+    "@repacks/next-pack": "workspace:*",
     "classlist-polyfill": "^1.2.0",
     "eslint-config-react-app": "^6.0.0",
     "html5shiv": "^3.7.3"
   },
   "devDependencies": {
-    "@playwright/test": "^1.20.1",
-    "@rollup/plugin-commonjs": "^21.0.3",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.161",
+    "@playwright/test": "^1.22.2",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "cross-env": "^7.0.3",
-    "eslint-config-next": "^12.1.2",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.7",
-    "prettier": "^2.6.1",
-    "rollup": "^2.70.1",
+    "eslint-config-next": "^12.1.6",
+    "fast-glob": "^3.2.11",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.2",
+    "prettier": "^2.6.2",
+    "rollup": "^2.75.1",
     "rollup-plugin-terser": "^7.0.2",
     "shelljs": "^0.8.5"
-  },
-  "engines": {
-    "node": ">=16.0.0",
-    "yarn": ">=1.22.4 <2.0.0"
   },
   "scripts": {
     "start": "yarn start:build && yarn start:server",
     "start:build": "yarn workspace @repacks/next-app build",
     "start:server": "NODE_ENV=production yarn workspace @repacks/next-app server",
     "dev": "yarn build && yarn workspace @repacks/next-app dev",
+    "dev:esm": "yarn build && yarn workspace @repacks/next-app-esm dev",
     "dev-server": "node utils/prerelease.js && yarn workspace @repacks/next-app server",
     "dev-ie": "REACT_REFRESH=false yarn dev",
-    "build": "rollup --config rollup.config.js && node utils/wrap-polyfills.js && node utils/create-eslint-config.js && node utils/prerelease.js",
+    "build": "yarn build:polyfills && yarn build:eslint && node utils/prerelease.js",
+    "build:polyfills": "rollup --config rollup.config.js && node utils/wrap-polyfills.js",
+    "build:eslint": "node utils/create-eslint-config.js",
     "test": "node utils/prerelease.js && playwright test",
     "lint": "yarn workspace @repacks/next-app lint",
     "format": "prettier --write 'packages/**/src/**/*.js' 'dev/**/src/**/*.js'",

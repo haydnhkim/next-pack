@@ -12,9 +12,13 @@ const checkHasPackage = (packageName) => {
 };
 
 const checkHasEslintRule = ({ targetDir }) => {
-  const hasPackage = checkHasPackage(`${targetDir}/.eslintrc`);
-  if (!hasPackage) return false;
-  const eslintConfig = require(`${targetDir}/.eslintrc`);
+  let lintConfigPath;
+  for (const ext of ['js', 'cjs']) {
+    const configPath = `${targetDir}/.eslintrc.${ext}`;
+    if (checkHasPackage(configPath)) lintConfigPath = configPath;
+  }
+  if (!lintConfigPath) return false;
+  const eslintConfig = require(lintConfigPath);
   const eslintExtends = Array.isArray(eslintConfig.extends)
     ? eslintConfig.extends
     : [eslintConfig.extends];
@@ -36,6 +40,7 @@ const run = ({ isUsingCliLintCommand = false } = {}) => {
   const targetDir = workspaceRoot || projectDir;
   const userConfigFile = [
     '.eslintrc.js',
+    '.eslintrc.cjs',
     '.eslintrc.yaml',
     '.eslintrc.yml',
     '.eslintrc',
@@ -45,10 +50,13 @@ const run = ({ isUsingCliLintCommand = false } = {}) => {
     .find((file) => fs.existsSync(file));
 
   // If the eslint setting exists but the extension cannot be supported
-  if (userConfigFile && !userConfigFile.endsWith('.js')) {
+  if (
+    userConfigFile &&
+    !['.js', '.cjs'].some((ext) => userConfigFile.endsWith(ext))
+  ) {
     console.error(
-      `⚠️  Please use the ${chalk.yellow(
-        '`.eslintrc.js`'
+      `⚠️  Please use the ${chalk.yellow('`.eslintrc.js`')} or ${chalk.yellow(
+        '`.eslintrc.cjs`'
       )}. More info: ${chalk.bold(
         'https://github.com/haydnhkim/next-pack#using-eslint'
       )}`

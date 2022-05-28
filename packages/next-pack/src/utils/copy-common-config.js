@@ -11,12 +11,20 @@ const targetDir = workspaceRoot || projectDir;
     '.editorconfig',
     '.gitattributes',
     '.eslintrc.js',
+    '.eslintrc.cjs',
     '.prettierrc.js',
+    '.prettierrc.cjs',
   ]
     .filter((file) => {
-      const isJsConfigFile = ['rc.js', 'config.js'].some((end) =>
-        file.endsWith(end)
-      );
+      const filePath = path.resolve(packageDir, file);
+      if (!fs.existsSync(filePath)) return false;
+
+      const isJsConfigFile = [
+        'rc.js',
+        'rc.cjs',
+        'config.js',
+        'config.cjs',
+      ].some((end) => file.endsWith(end));
       const userFilePath = path.resolve(targetDir, file);
       const isExistsFile = fs.existsSync(userFilePath);
       let isCopyTarget = false;
@@ -26,7 +34,6 @@ const targetDir = workspaceRoot || projectDir;
         isCopyTarget = !isExistsFile;
       } else if (isExistsFile) {
         // Files with the same content data are not copy targets
-        const filePath = path.resolve(packageDir, file);
         const fileData = fs.readFileSync(filePath, 'utf8');
         const userFileData = fs.readFileSync(userFilePath, 'utf8');
         isCopyTarget = fileData !== userFileData;

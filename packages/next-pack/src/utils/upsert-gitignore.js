@@ -9,7 +9,8 @@ const gitIgnorePath = path.resolve(
   __dirname,
   '..',
   '..',
-  'config/gitignore.txt'
+  'config',
+  'gitignore.txt'
 );
 const sharedGitIgnoreRegExp =
   /# Created by https:\/\/www.gitignore.io.+[^]+# End of next-pack/;

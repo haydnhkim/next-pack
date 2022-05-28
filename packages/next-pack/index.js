@@ -1,10 +1,12 @@
-const bootstrap = require('./src/utils/bootstrap');
+const bootstrap = require('./src/utils/bootstrap.js');
 const next = require('next');
 
-module.exports = (options) => {
+const nextPack = (options) => {
   const command = options.dev ? 'dev' : 'start';
 
   bootstrap(command);
 
   return next(options);
 };
+
+module.exports = nextPack;

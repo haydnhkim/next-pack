@@ -1,5 +1,8 @@
-const path = require('path');
-const { readFile, writeFile } = require('fs/promises');
+import { readFile, writeFile } from 'fs/promises';
+import path from 'path';
+import url from 'url';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const polyfillsDir = path.join(
   __dirname,
