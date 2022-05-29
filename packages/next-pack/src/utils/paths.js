@@ -3,7 +3,7 @@ const fs = require('fs');
 const findUp = require('find-up');
 const { transformSync } = require('next/dist/build/swc/index');
 const { getLoaderSWCOptions } = require('next/dist/build/swc/options');
-const { requireFromString } = require('module-from-string');
+const requireFromString = require('require-from-string');
 
 const projectDir = path.resolve(fs.realpathSync(process.cwd()));
 
