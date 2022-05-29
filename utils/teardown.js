@@ -20,7 +20,13 @@ const removeGarbageFiles = ({ targetDir, excludes = [] }) => {
 };
 
 // remove generated files in dev apps
-const devAppExcludes = ['pages', 'src', 'next.config.js', 'package.json'];
+const devAppExcludes = [
+  'pages',
+  'src',
+  'next.config.js',
+  'tsconfig.json',
+  'package.json',
+];
 removeGarbageFiles({
   targetDir: path.resolve(__dirname, '../dev/next-app'),
   excludes: devAppExcludes,
