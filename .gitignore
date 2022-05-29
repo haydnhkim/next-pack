@@ -384,7 +384,6 @@ dev/**/*rc.js
 dev/**/*rc.cjs
 dev/**/yarn.lock
 dev/**/next-env.d.ts
-dev/**/tsconfig.json
 dev/workdir/.*
 dev/workdir/*.js
 dev/workdir/yarn.lock

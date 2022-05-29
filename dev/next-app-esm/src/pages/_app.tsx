@@ -1,17 +1,14 @@
-import React from 'react';
+import { useEffect } from 'react';
 import '@repacks/next-pack/src/client/polyfills-module';
-import App from 'next/app';
+import type { AppProps } from 'next/app';
 import ieCorsHelper from '../utils/ie-cors-helper';
 
-class MyApp extends App {
-  componentDidMount() {
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  useEffect(() => {
     ieCorsHelper();
-  }
+  }, []);
 
-  render() {
-    const { Component, pageProps } = this.props;
-    return <Component {...pageProps} />;
-  }
-}
+  return <Component {...pageProps} />;
+};
 
 export default MyApp;
