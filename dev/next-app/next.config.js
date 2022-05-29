@@ -1,3 +1,4 @@
+const path = require('path');
 const {
   addPolyfillPlugins,
 } = require('@repacks/next-pack/src/plugins/add-polyfills-nomodule');
@@ -13,4 +14,11 @@ module.exports = {
     };
   },
   swcMinify: true,
+  nextPack: {
+    eslint: {
+      files: ['.js', '.ts', '.tsx'].map((n) =>
+        path.resolve(__dirname, `dev/**/src/**/*${n}`)
+      ),
+    },
+  },
 };
