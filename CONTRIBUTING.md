@@ -27,7 +27,7 @@
 
 ## Development environment setting
 
-[yarn 1](https://www.npmjs.com/package/yarn) is required for `next-pack` development.
+[yarn 3](https://www.npmjs.com/package/yarn) is required for `next-pack` development.
 
 `next-pack` can only be used if there is a project to add as a dependency.  
 For this I have set up the `/dev/next-app` project.  
