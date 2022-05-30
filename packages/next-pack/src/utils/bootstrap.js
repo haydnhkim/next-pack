@@ -1,3 +1,4 @@
+const { isSupportedWorkspaceRootPath } = require('./paths');
 if (!process.env.NODE_ENV) {
   // @ts-ignore
   process.env.NODE_ENV = 'development';
@@ -5,8 +6,8 @@ if (!process.env.NODE_ENV) {
 const dev = process.env.NODE_ENV === 'development';
 
 const bootstrap = (command) => {
-  if (dev && command === 'dev') {
-    // for dev mode
+  // for dev mode
+  if (dev && command === 'dev' && isSupportedWorkspaceRootPath) {
     require('./run-eslint-activate');
     require('./copy-common-config');
     require('./upsert-gitignore');

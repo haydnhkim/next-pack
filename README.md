@@ -90,7 +90,7 @@ Take a look at the following `next.config.js` example:
 ```js
 module.exports = {
   nextPack: {
-    workspaceRoot: path.resolve(__dirname),
+    workspaceRoot: path.resolve(__dirname), // or './', '../..'
     eslint: {
       disable: false,
       files: [],
@@ -105,7 +105,7 @@ module.exports = {
 
 `workspaceRoot` {String} (optional): default `workspace's root folder`
 
-You can set the workspace's root folder as an absolute path.  
+You can set the workspace's root folder path.  
 Each configuration file is created in the folder set as the workspace root.  
 If not set, the project's root folder is the workspace's root folder.
 
@@ -116,6 +116,7 @@ If not set, the project's root folder is the workspace's root folder.
   turn on/off eslint execution.
 - `eslint.files` {Array<string>} (optional): default `['src', 'pages', 'components', 'server']`  
   Configuration by using the [glob pattern](https://eslint.org/docs/user-guide/configuring#configuration-based-on-glob-patterns) for the files being watched.
+  (eg. `["./src/**/*.ts", "./src/**/*.tsx"]`)
 - `eslint.restartable` {string|Boolean} (optional): default `rs`  
   next-pack does not display duplicate eslint errors in the same file even if the file is changed.  
   Whilst fixing eslint errors, if you need to print out the entire eslint error, instead of stopping and restart next-pack, you can type `rs` with a carriage return, and eslint will restart your process.  

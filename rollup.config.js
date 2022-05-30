@@ -1,6 +1,6 @@
 import { terser } from 'rollup-plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default [
   {
@@ -10,7 +10,7 @@ export default [
       format: 'umd',
       name: 'polyfills-module',
     },
-    plugins: [resolve(), commonjs(), terser()],
+    plugins: [nodeResolve(), commonjs(), terser()],
   },
   {
     input: 'utils/polyfills/polyfills-nomodule.js',
@@ -19,6 +19,6 @@ export default [
       format: 'umd',
       name: 'polyfills-nomodule',
     },
-    plugins: [resolve(), commonjs(), terser()],
+    plugins: [nodeResolve(), commonjs(), terser()],
   },
 ];

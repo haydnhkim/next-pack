@@ -7,6 +7,12 @@ const targetDir = workspaceRoot || projectDir;
 // Copy specific configuration files to the project root
 (() => {
   const packageDir = path.resolve(__dirname, '..', '..');
+  const userPackageCode = fs.readFileSync(
+    path.resolve(targetDir, 'package.json'),
+    'utf8'
+  );
+  const userPackageJson = userPackageCode ? JSON.parse(userPackageCode) : {};
+
   const targetFiles = [
     '.editorconfig',
     '.gitattributes',
@@ -18,30 +24,19 @@ const targetDir = workspaceRoot || projectDir;
     .filter((file) => {
       const filePath = path.resolve(packageDir, file);
       if (!fs.existsSync(filePath)) return false;
-
-      const isJsConfigFile = [
-        'rc.js',
-        'rc.cjs',
-        'config.js',
-        'config.cjs',
-      ].some((end) => file.endsWith(end));
       const userFilePath = path.resolve(targetDir, file);
-      const isExistsFile = fs.existsSync(userFilePath);
-      let isCopyTarget = false;
-
-      if (isJsConfigFile) {
-        // *rc.js, *config.js files are not copied if they already exist
-        isCopyTarget = !isExistsFile;
-      } else if (isExistsFile) {
-        // Files with the same content data are not copy targets
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        const userFileData = fs.readFileSync(userFilePath, 'utf8');
-        isCopyTarget = fileData !== userFileData;
-      }
-
-      return isCopyTarget;
+      return ![
+        userFilePath,
+        userFilePath.replace(/\.cjs$/, '.js'),
+        userFilePath.replace(/\.js$/, '.cjs'),
+      ].some((filePath) => fs.existsSync(filePath));
     })
-    .map((file) => path.resolve(packageDir, file));
+    .map((file) => {
+      const filePath = path.resolve(packageDir, file);
+      return userPackageJson.type !== 'module' && file.endsWith('.cjs')
+        ? filePath.replace(/\.cjs$/, '.js')
+        : filePath;
+    });
 
   if (targetFiles.length === 0) return;
 
