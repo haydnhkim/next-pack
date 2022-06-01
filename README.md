@@ -225,7 +225,7 @@ After installing referring to [Husky install](https://typicode.github.io/husky/#
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged // or yarn lint-staged
+npx lint-staged # or yarn lint-staged
 ```
 
 ## Contributing
