@@ -95,7 +95,7 @@ module.exports = {
       disable: false,
       files: [],
       restartable: 'rs',
-      exit: ['warning', 'errror'],
+      exit: ['warning', 'error'],
     },
   },
 };
