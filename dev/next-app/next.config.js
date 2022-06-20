@@ -17,7 +17,7 @@ module.exports = {
   nextPack: {
     eslint: {
       files: ['.js', '.ts', '.tsx'].map((n) =>
-        path.resolve(__dirname, `dev/**/src/**/*${n}`)
+        path.resolve(__dirname, `src/**/*${n}`)
       ),
     },
   },

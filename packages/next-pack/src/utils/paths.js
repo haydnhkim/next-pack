@@ -16,7 +16,8 @@ if (fs.existsSync(userNextConfigPath)) {
   // transform to support both cjs and esm in next.config.js file
   const code = fs.readFileSync(userNextConfigPath, 'utf-8');
   userNextConfig = importFromStringSync(code, {
-    globals: { URL: require('url').URL },
+    globals: { process, URL: require('url').URL },
+    dirname: path.join(userNextConfigPath, '..'),
   });
   if (userNextConfig.default) userNextConfig = userNextConfig.default;
 }
