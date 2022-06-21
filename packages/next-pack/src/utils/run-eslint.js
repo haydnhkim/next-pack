@@ -123,14 +123,14 @@ const run = ({ isUsingCliLintCommand = false } = {}) => {
   const errors = new Map();
   let lastLintRunTime;
 
-  const lint = async (path) => {
+  const lint = async (filePath) => {
     // Return if rerun within 0.3 seconds
     if (Date.now() < lastLintRunTime + 300) return;
 
     lastLintRunTime = Date.now();
     let results;
     try {
-      results = await eslint.lintFiles(path || eslintUserDirs);
+      results = await eslint.lintFiles(filePath || eslintUserDirs);
     } catch (err) {
       if (hasCustomConfig) console.error(err);
       return;
@@ -212,8 +212,8 @@ ${chalk.green('✔︎ problem resolved!')}
       persistent: true,
     });
 
-    watcher.on('change', () => {
-      lint()
+    watcher.on('change', (filePath) => {
+      lint(filePath)
         .then(() => {})
         .catch(() => {});
     });
