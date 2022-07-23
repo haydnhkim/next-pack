@@ -84,19 +84,18 @@ It is designed to use `@repacks/next-pack` instead of `next`.
 
 ## configs
 
-For custom advanced behavior of next-pack, You can use `next.config.js` in the configuration file of Next.js. Add a `nextPack` field in it.  
-Take a look at the following `next.config.js` example:
+For custom advanced behavior of next-pack, You can use `.nextpackrc.cjs` in the configuration file.  
+Take a look at the following `.nextpackrc.cjs` example:
 
 ```js
+const path = require('path');
 module.exports = {
-  nextPack: {
-    workspaceRoot: path.resolve(__dirname), // or './', '../..'
-    eslint: {
-      disable: false,
-      files: [],
-      restartable: 'rs',
-      exit: ['warning', 'error'],
-    },
+  workspaceRoot: path.resolve(__dirname), // or './', '../..'
+  eslint: {
+    disable: false,
+    files: [],
+    restartable: 'rs',
+    exit: ['warning', 'error'],
   },
 };
 ```

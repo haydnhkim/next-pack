@@ -1,62 +1,35 @@
 const path = require('path');
 const fs = require('fs');
 const findUp = require('find-up');
-const { importFromStringSync } = require('module-from-string');
 const chalk = require('chalk');
 
 const projectDir = path.resolve(fs.realpathSync(process.cwd()));
 
-const userNextConfigPath =
-  findUp.sync('next.config.js', {
+const nextPackConfigPath =
+  findUp.sync('.nextpackrc.cjs', {
     cwd: projectDir,
-  }) || path.resolve(projectDir, 'next.config.js');
+  }) || path.resolve(projectDir, '.nextpackrc.cjs');
 
-let userNextConfig = {};
-if (fs.existsSync(userNextConfigPath)) {
-  // transform to support both cjs and esm in next.config.js file
-  const code = fs.readFileSync(userNextConfigPath, 'utf-8');
-  userNextConfig = importFromStringSync(code, {
-    globals: { process, URL: require('url').URL },
-    dirname: path.join(userNextConfigPath, '..'),
-  });
-  if (userNextConfig.default) userNextConfig = userNextConfig.default;
+let nextPackConfig = {};
+if (fs.existsSync(nextPackConfigPath)) {
+  try {
+    nextPackConfig = require(nextPackConfigPath);
+  } catch {}
 }
-const userNextPackConfig = userNextConfig.nextPack || {};
-userNextConfig.nextPack = {
-  reactRefresh: true,
-  ...userNextPackConfig,
+nextPackConfig = {
+  ...nextPackConfig,
   eslint: {
     restartable: 'rs',
-    ...userNextPackConfig.eslint,
+    ...nextPackConfig.eslint,
   },
 };
-let { workspaceRoot, eslint } = userNextConfig.nextPack;
+let { workspaceRoot, eslint } = nextPackConfig;
 let isSupportedWorkspaceRootPath = true;
-
-// esm is executed in the transpiled vm (importFromStringSync),
-// so there is a problem that the path of the executable file is incorrectly specified as the path in the package.
-if (
-  workspaceRoot &&
-  ['node_modules', '.yarn'].some((n) =>
-    workspaceRoot.includes(`${path.sep}${n}${path.sep}`)
-  )
-) {
-  isSupportedWorkspaceRootPath = false;
-  console.error(
-    `⚠️  Please use relative path in ${chalk.green(
-      '`nextPack.workspaceRoot`'
-    )} of ${chalk.yellow(
-      '`next.config.js`'
-    )}. esm only supports relative paths. More info: ${chalk.bold(
-      'https://github.com/haydnhkim/next-pack#workspaceroot'
-    )}`
-  );
-}
 
 // Change relative path to absolute path
 if (workspaceRoot && workspaceRoot.startsWith('.')) {
   const absoluteWorkspaceRootDir = path.join(
-    userNextConfigPath,
+    nextPackConfigPath,
     '..',
     workspaceRoot
   );
@@ -66,14 +39,14 @@ if (workspaceRoot && workspaceRoot.startsWith('.')) {
     isSupportedWorkspaceRootPath = false;
     console.error(
       `⚠️  Expected a ${chalk.yellow('`package.json`')} file in ${chalk.green(
-        '`nextPack.workspaceRoot`'
+        '`workspaceRoot`'
       )}, but it doesn't exist. Please check the path again.`
     );
   }
 }
 if (eslint.files?.some((n) => n.startsWith('.'))) {
   eslint.files = eslint.files.map((n) =>
-    (n.startsWith('.') ? path.join(userNextConfigPath, '..', n) : n).replace(
+    (n.startsWith('.') ? path.join(nextPackConfigPath, '..', n) : n).replace(
       /\\/g,
       '/'
     )
@@ -87,7 +60,7 @@ const nextPackPolyfillNomodulePath = require.resolve(
 module.exports = {
   projectDir,
   workspaceRoot,
-  userNextConfig,
+  nextPackConfig,
   nextPackPolyfillNomodulePath,
   isSupportedWorkspaceRootPath,
 };

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const threads = require('bthreads');
-const { projectDir, workspaceRoot, userNextConfig } = require('./paths');
+const { projectDir, workspaceRoot, nextPackConfig } = require('./paths');
 
 const checkHasPackage = (packageName) => {
   try {
@@ -72,7 +72,7 @@ const run = ({ isUsingCliLintCommand = false } = {}) => {
   }
 
   const { ESLint } = require('eslint');
-  const { files, exit = [] } = userNextConfig.nextPack.eslint || {};
+  const { files, exit = [] } = nextPackConfig.eslint || {};
 
   const userDirs = files
     ? [...new Set(files)]

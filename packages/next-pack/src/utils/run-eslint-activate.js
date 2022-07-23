@@ -1,9 +1,9 @@
 const path = require('path');
 const chalk = require('chalk');
-const { userNextConfig } = require('./paths');
+const { nextPackConfig } = require('./paths');
 
 (() => {
-  const { disable, restartable } = userNextConfig.nextPack.eslint || {};
+  const { disable, restartable } = nextPackConfig.eslint || {};
 
   if (process.env.NODE_ENV !== 'development' || disable) return;
 

@@ -379,9 +379,11 @@ packages/next-pack/*rc.js
 packages/next-pack/*rc.cjs
 packages/next-pack/*.md
 packages/next-pack/.git*
-dev/**/.*
-dev/**/*rc.js
-dev/**/*rc.cjs
+dev/**/.editorconfig
+dev/**/.gitattributes
+dev/**/.gitignore
+dev/**/.eslintrc.cjs
+dev/**/.prettierrc.cjs
 dev/**/yarn.lock
 dev/**/next-env.d.ts
 dev/workdir/.*
