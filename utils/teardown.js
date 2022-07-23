@@ -24,6 +24,8 @@ const devAppExcludes = [
   'pages',
   'src',
   'next.config.js',
+  'index.d.ts',
+  '.nextpackrc.cjs',
   'tsconfig.json',
   'package.json',
 ];
