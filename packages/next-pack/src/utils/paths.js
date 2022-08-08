@@ -44,7 +44,7 @@ if (workspaceRoot && workspaceRoot.startsWith('.')) {
     );
   }
 }
-if (eslint.files?.some((n) => n.startsWith('.'))) {
+if ((eslint.files || []).some((n) => n.startsWith('.'))) {
   eslint.files = eslint.files.map((n) =>
     (n.startsWith('.') ? path.join(nextPackConfigPath, '..', n) : n).replace(
       /\\/g,
