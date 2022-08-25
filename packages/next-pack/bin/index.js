@@ -9,7 +9,7 @@ const command = scriptIndex === -1 ? args[0] || 'dev' : args[scriptIndex];
 
 const run = () => {
   if (command === 'lint') {
-    const lint = require('../src/utils/run-eslint');
+    const lint = require('../src/utils/run-eslint-activate');
     lint({ isUsingCliLintCommand: true });
     return;
   }

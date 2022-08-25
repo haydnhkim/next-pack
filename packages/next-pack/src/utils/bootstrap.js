@@ -8,10 +8,12 @@ const dev = process.env.NODE_ENV === 'development';
 const bootstrap = (command) => {
   // for dev mode
   if (dev && command === 'dev' && isSupportedWorkspaceRootPath) {
-    require('./run-eslint-activate');
-    require('./copy-common-config');
-    require('./upsert-gitignore');
-    require('./insert-hook');
+    try {
+      require('./run-eslint-activate')();
+      require('./copy-common-config');
+      require('./upsert-gitignore');
+      require('./insert-hook');
+    } catch {}
   }
 };
 
