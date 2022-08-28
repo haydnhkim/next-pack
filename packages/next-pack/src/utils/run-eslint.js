@@ -60,7 +60,7 @@ const run = () => {
   // eslint execution function
   const lint = async (filePath) => {
     const lintTargetFilePaths = filePath ? [filePath] : workerData.filePaths;
-    if (lintTargetFilePaths?.length === 0) return;
+    if ((lintTargetFilePaths || []).length === 0) return;
 
     let results;
     try {
