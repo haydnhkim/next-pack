@@ -35,7 +35,7 @@
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "release-it": "^15.1.4"
+    "release-it": "^15.5.0"
   },
   "peerDependencies": {
     "next": ">=11.0.0 <13.0.0"

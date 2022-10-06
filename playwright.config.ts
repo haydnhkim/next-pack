@@ -1,5 +1,10 @@
 import * as path from 'path';
-import { PlaywrightTestConfig, devices } from '@playwright/test';
+import * as url from 'url';
+import { devices } from '@playwright/test';
+import type { PlaywrightTestConfig } from '@playwright/test';
+
+// @ts-ignore
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 // Reference: https://playwright.dev/docs/test-configuration
 const config: PlaywrightTestConfig = {
