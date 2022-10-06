@@ -80,13 +80,17 @@ const workerLintResults = ({ type, results, resultText }) => {
   const [problemText, totalCount = 0, errorCount = 0, warningCount = 0] =
     /✖ (\d).+(\d) error.+(\d) warning.+$/gm.exec(resultText) || [];
 
+  const replacedTargetDir = targetDir.endsWith(path.sep)
+    ? targetDir.slice(0, -1)
+    : targetDir;
+
   state.totalCount += Number(totalCount);
   state.errorCount += Number(errorCount);
   state.warningCount += Number(warningCount);
   state.lintResults.push(...results);
   state.resultTexts.push(
     ...resultText
-      .replace(new RegExp(targetDir, 'g'), '.')
+      .replace(new RegExp(replacedTargetDir, 'g'), '.')
       .replace(problemText, '')
       .split('\n')
       .slice(0, -3)
