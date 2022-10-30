@@ -6,17 +6,11 @@ const Page = () => (
     <span>hello page</span>
     <br />
 
-    <Link href="/hello">
-      <a>go /hello</a>
-    </Link>
+    <Link href="/hello">go /hello</Link>
     <br />
-    <Link href="/hi">
-      <a>go /hi tsx</a>
-    </Link>
+    <Link href="/hi">go /hi tsx</Link>
     <br />
-    <Link href="/">
-      <a>go home</a>
-    </Link>
+    <Link href="/">go home</Link>
   </div>
 );
 

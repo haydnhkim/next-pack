@@ -28,9 +28,7 @@ const Page = () => {
       </ul>
 
       <div>
-        <Link href="/hello?test=1">
-          <a>hello page</a>
-        </Link>
+        <Link href="/hello?test=1">hello page</Link>
       </div>
     </>
   );
