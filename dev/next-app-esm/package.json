@@ -9,8 +9,8 @@
   "dependencies": {
     "@repacks/next-pack": "workspace:*",
     "express": "^4.18.1",
-    "next": "^13.0.0",
-    "next-transpile-modules": "^9.1.0",
+    "next": "^13.0.5",
+    "next-transpile-modules": "^10.0.0",
     "qs": "^6.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
