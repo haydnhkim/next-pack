@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import eslintConfigReactApp from 'eslint-config-react-app';
-import baseConfig from 'eslint-config-react-app/base.js';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const nextPackDir = path.resolve(__dirname, '../packages/next-pack');
@@ -25,11 +24,19 @@ const createEsLintConfig = async () => {
 
   // plugins cannot be centralized ESLint configuration
   const config = {
-    env: baseConfig.env,
-    settings: baseConfig.settings,
-
+    env: {
+      browser: true,
+      commonjs: true,
+      es6: true,
+      jest: true,
+      node: true,
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
-      ...baseConfig.rules,
       ...reactAppConfigRules,
       'no-unused-expressions': [
         'warn',

@@ -1,9 +1,11 @@
 import { addPolyfillPlugins } from '@repacks/next-pack/src/plugins/add-polyfills-nomodule.js';
-import nextTM from 'next-transpile-modules';
 
-const withTM = nextTM(['recoil']);
-
-const config = withTM({
+const config = {
+  experimental: {
+    appDir: true,
+  },
+  swcMinify: true,
+  transpilePackages: ['recoil'],
   webpack(config, { dev, isServer }) {
     return {
       ...config,
@@ -13,7 +15,6 @@ const config = withTM({
       ].filter(Boolean),
     };
   },
-  swcMinify: true,
-});
+};
 
 export default config;
