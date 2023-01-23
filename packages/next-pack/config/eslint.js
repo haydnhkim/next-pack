@@ -12,8 +12,6 @@ module.exports = {
     },
   },
   rules: {
-    'react/jsx-uses-vars': 'warn',
-    'react/jsx-uses-react': 'warn',
     'array-callback-return': 'warn',
     'default-case': [
       'warn',
@@ -69,8 +67,8 @@ module.exports = {
       },
     ],
     'no-multi-str': 'warn',
-    'no-native-reassign': 'warn',
-    'no-negated-in-lhs': 'warn',
+    'no-global-assign': 'warn',
+    'no-unsafe-negation': 'warn',
     'no-new-func': 'warn',
     'no-new-object': 'warn',
     'no-new-symbol': 'warn',
@@ -273,5 +271,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/jsx-uses-vars': 'warn',
+    'react/jsx-uses-react': 'warn',
   },
 };
