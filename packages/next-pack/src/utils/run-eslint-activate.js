@@ -48,7 +48,7 @@ const getUserDirs = () => {
   const { files } = nextPackConfig.eslint || {};
   return files
     ? [...new Set(files)]
-    : ['src', 'pages', 'components', 'server']
+    : ['src', 'pages', 'app', 'components', 'server']
         .map((dir) => path.resolve(targetDir, dir))
         .filter((dir) => fs.existsSync(dir));
 };
