@@ -241,28 +241,28 @@ const restartInit = ({
     chalk.yellow(`eslint restart at any time, enter \`${restartable}\``)
   );
 
-  // // allow eslint to full print when the use types 'rs\n'
-  // process.stdin.resume();
-  // process.stdin.setEncoding('utf8');
-  // process.stdin.on('data', (data) => {
-  //   const str = data.toString().trim().toLowerCase();
-  //
-  //   // if the keys entered match the restartable value, then restart!
-  //   if (str === restartable && !state.isLinting) {
-  //     state.isLinting = true;
-  //     errors.clear();
-  //     console.info(`${chalk.cyan('wait')}  - eslint restarting...`);
-  //     runLintAllFiles({
-  //       userDirs,
-  //       userConfigFile,
-  //       isUsingCliLintCommand,
-  //       isRestart: true,
-  //     });
-  //   } else if (data.charCodeAt(0) === 12) {
-  //     // ctrl+l
-  //     console.clear();
-  //   }
-  // });
+  // allow eslint to full print when the use types 'rs\n'
+  process.stdin.resume();
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', (data) => {
+    const str = data.toString().trim().toLowerCase();
+
+    // if the keys entered match the restartable value, then restart!
+    if (str === restartable && !state.isLinting) {
+      state.isLinting = true;
+      errors.clear();
+      console.info(`${chalk.cyan('wait')}  - eslint restarting...`);
+      runLintAllFiles({
+        userDirs,
+        userConfigFile,
+        isUsingCliLintCommand,
+        isRestart: true,
+      });
+    } else if (data.charCodeAt(0) === 12) {
+      // ctrl+l
+      console.clear();
+    }
+  });
 };
 
 const run = ({ isUsingCliLintCommand = false } = {}) => {
